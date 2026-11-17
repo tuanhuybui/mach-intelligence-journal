@@ -137,8 +137,11 @@ module.exports=async function handler(req,res){
   }
   if(action==='subscribe'&&req.method==='POST'){
    const email=clean(req.body?.email,254).toLowerCase();if(!/^\S+@\S+\.\S+$/.test(email))return send(res,400,{error:'Email không hợp lệ.'});
-   await supa('POST',apiURL('mach_subscribers'),{email},undefined,'return=minimal,resolution=ignore-duplicates');
-   return send(res,200,{ok:true});
+   // Anonymous subscribers only have INSERT permission; ignore-duplicates needs SELECT.
+   // Use plain insert; consider unique-email conflicts as an already accepted signup.
+   try{await supa('POST',apiURL('mach_subscribers'),{email},undefined,'return=minimal');}
+   catch(err){if(err.status!==409)throw err;}
+   return send(res,200,{ok:true,message:'Đã nhận đăng ký bản tin.'});
   }
   return send(res,404,{error:'Không tìm thấy API.'});
  }catch(e){console.error('[MACH]',action,e.status||500,String(e.message).slice(0,160));return send(res,e.status>=400&&e.status<500?e.status:502,{error:e.status===401?'Thông tin xác thực không hợp lệ.':(e.status===403?'Không đủ quyền thực hiện thao tác.':'Yêu cầu chưa thành công. Vui lòng thử lại.')});}
