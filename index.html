@@ -88,45 +88,48 @@
 @media(max-width:800px){.mach-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mach-kpi{padding:17px}.mach-dash-panel{padding:17px}.mach-microstat{font-size:9px}.article-statbar{gap:12px}.mach-rank{font-size:10px}.mach-visitor-stat{font-size:9px}}
 @media(max-width:490px){.metric-line{gap:9px}.mach-actions{gap:6px}.mach-action{font-size:10px;padding:9px}.mach-dash-panel{overflow-x:auto}}
 
-/* MẠCH. v8 — Quiet reading toolbar: one meta line, one set of actions */
-.article-head .article-byline-meta{
-  justify-content:center;gap:9px 11px;max-width:920px;margin:0 auto;
-  font-size:10px;line-height:1.7;
-}
+/* MẠCH. v9 — circular reactions and top-right number badges */
+.article-head .article-byline-meta{justify-content:center;gap:9px 11px;max-width:920px;margin:0 auto;font-size:10px;line-height:1.7}
 .article-byline-meta .article-readers{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .article-byline-meta .article-readers .mach-microstat{margin:0}
 .reading-grid{grid-template-columns:136px minmax(0,760px) 136px;column-gap:28px}
 .article-tools{border-top:1px solid #d3d3d3;padding-top:13px}
 .article-tools .kicker{font-size:10px;letter-spacing:1.2px;margin-bottom:13px}
-.article-tools .mach-actions{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
- width:136px;margin:0;
-}
+.article-tools .mach-actions{display:grid;grid-template-columns:repeat(2,56px);gap:14px;width:126px;margin:0}
 .article-tools .mach-action{
- width:100%;height:46px;padding:0 6px;gap:6px;justify-content:center;
- border:1px solid #dedede;border-radius:12px;line-height:1;
- background:#fff;box-shadow:none;transition:border-color .16s,background .16s,color .16s;
+ position:relative;display:grid;place-items:center;width:56px;height:56px;min-width:56px;
+ padding:0;border:1px solid #d7d7d7;border-radius:50%;background:#fff;color:#121212;
+ box-shadow:none;cursor:pointer;transition:background .18s,border-color .18s,color .18s
 }
-.article-tools .mach-action svg{width:17px;height:17px;flex-shrink:0}
-.article-tools .mach-action span{font-size:10px;min-width:1ch;text-align:center}
-.article-tools .mach-action.active{background:#141414;color:white;border-color:#141414}
-.article-tools .mach-action:hover:not(.active){border-color:#171717;background:#f8f8f8}
-.article-tools .mach-action:focus-visible{outline-offset:3px}
+.article-tools .mach-action-icon{display:grid;place-items:center;line-height:1}
+.article-tools .mach-action svg{width:18px;height:18px;flex-shrink:0}
+.article-tools .mach-action-badge{
+ position:absolute;top:-5px;right:-5px;min-width:21px;height:21px;padding:0 5px;
+ display:flex;align-items:center;justify-content:center;border-radius:999px;
+ background:#151515;color:white;border:2px solid #fff;
+ font:600 9px/1 var(--mono);font-variant-numeric:tabular-nums;box-sizing:border-box;
+ pointer-events:none
+}
+.article-tools .mach-action.active,.article-tools .mach-action:hover,.article-tools .mach-action:focus-visible{background:#111;color:#fff;border-color:#111}
+.article-tools .mach-action.active .mach-action-badge,.article-tools .mach-action:hover .mach-action-badge,.article-tools .mach-action:focus-visible .mach-action-badge{background:#fff;color:#111;border-color:#111}
+.article-tools .mach-action:focus-visible{outline:2px solid #111;outline-offset:3px}
 @media(max-width:1210px) and (min-width:801px){
  .reading-grid{grid-template-columns:124px minmax(0,760px) 0;gap:24px}
- .article-tools .mach-actions{width:124px;gap:8px}
+ .article-tools .mach-actions{width:124px;grid-template-columns:repeat(2,54px);gap:12px}
+ .article-tools .mach-action{width:54px;min-width:54px;height:54px}
 }
 @media(max-width:800px){
  .reading-grid{display:block;padding-top:22px}
  .article-tools{position:static;border-top:0;border-bottom:1px solid #e2e2e2;padding:0 0 19px;margin-bottom:28px}
  .article-tools .kicker{display:none}
- .article-tools .mach-actions{display:flex;width:auto;max-width:360px;gap:9px;margin:0}
- .article-tools .mach-action{flex:0 0 64px;width:64px;height:44px}
+ .article-tools .mach-actions{display:flex;flex-wrap:nowrap;width:auto;max-width:none;gap:13px;margin:0}
+ .article-tools .mach-action{flex:0 0 52px;width:52px;min-width:52px;height:52px}
 }
 @media(max-width:490px){
  .article-head .article-byline-meta{gap:5px 8px;font-size:9px}
- .article-tools .mach-actions{justify-content:center;max-width:none;gap:10px}
- .article-tools .mach-action{flex:0 0 62px;width:62px}
+ .article-tools .mach-actions{justify-content:center;gap:13px}
+ .article-tools .mach-action{flex:0 0 50px;width:50px;min-width:50px;height:50px}
+ .article-tools .mach-action-badge{min-width:19px;height:19px;padding:0 4px;font-size:8px}
 }
 
 </style>
@@ -447,7 +450,7 @@ function bodyMarkup(text,sourceUrls=[]){
  const after=ref?refs.split(/\n\s*\n/).filter(x=>!/^\s*[-*]\s*\[/.test(x)).filter(x=>!/^\s*\d+\.\s*\[/.test(x)).map(x=>`<p class="article-disclaimer">${inlineMd(x.trim())}</p>`).join(''):'';
  return blocks+(ref||sourceUrls?.length?sourceCards(refs,sourceUrls):'')+after;
 }
-function renderArticle(id){const a=byId(id);if(!a){render404();return;}const related=articles().filter(b=>b.id!==id&&(b.category===a.category)).slice(0,3);app.innerHTML=`<div class="article-head"><div class="kicker">[ ${escapeHTML(a.category.toUpperCase())} / LONG READ ]</div><h1>${escapeHTML(a.title)}</h1><p class="subtitle">${escapeHTML(a.excerpt)}</p>${articleMeta(a)}</div><figure class="wrap article-cover">${cover(a)}<figcaption>FIG. — MINH HỌA BIÊN TẬP / MẠCH. VISUAL RESEARCH</figcaption></figure><div class="wrap reading-grid"><aside class="article-tools" aria-label="Tương tác bài viết"><span class="kicker">READ / REACT</span><div class="mach-actions"><button type="button" class="mach-action ${state.metrics[a.id]?.liked?'active':''}" data-action="like" data-id="${escapeHTML(a.id)}" aria-label="Thích bài viết" aria-pressed="${!!state.metrics[a.id]?.liked}" title="Thích bài viết">${ico('heart')} <span data-metric-key="${escapeHTML(a.id)}" data-metric="likes">${shortCount(state.metrics[a.id]?.likes)}</span></button><button type="button" class="mach-action ${state.saved.includes(a.id)?'active':''}" data-action="bookmark" data-id="${escapeHTML(a.id)}" aria-label="Lưu bài viết" aria-pressed="${state.saved.includes(a.id)}" title="Lưu bài viết">${ico('bookmark')} <span data-metric-key="${escapeHTML(a.id)}" data-metric="saves">${shortCount(state.metrics[a.id]?.saves)}</span></button><button type="button" class="mach-action" data-action="share" data-id="${escapeHTML(a.id)}" title="Chia sẻ bài viết" aria-label="Chia sẻ bài viết">${ico('share')} <span data-metric-key="${escapeHTML(a.id)}" data-metric="shares">${shortCount(state.metrics[a.id]?.shares)}</span></button><button type="button" class="mach-action mach-action-link" data-action="copy" data-id="${escapeHTML(a.id)}" title="Sao chép liên kết" aria-label="Sao chép liên kết">${ico('link')}</button></div></aside><article class="article-content">${bodyMarkup(a.body,a.source_urls)}</article><span></span></div><div class="article-tail"><div class="tags"><span>${escapeHTML(a.category)}</span><span>MẠCH. JOURNAL</span><span>TECH / SCIENCE</span></div><div class="byline"><div class="avatar">${escapeHTML(a.author.charAt(0))}</div><div><strong>${escapeHTML(a.author)}</strong><p>Chia sẻ kiến thức và góc nhìn trên MẠCH.</p></div></div><section class="comments" id="comments"><h2>Bình luận <span id="comment-count">(0)</span></h2><div id="comment-list"><p class="dim">Đang tải bình luận...</p></div><form id="comment-form" data-id="${escapeHTML(a.id)}"><div class="field"><label for="comment-name">TÊN CỦA BẠN</label><input id="comment-name" name="name" maxlength="70" placeholder="Tên hiển thị" required></div><div class="field"><label for="comment-text">CHIA SẺ Ý KIẾN</label><textarea id="comment-text" name="text" rows="3" maxlength="1600" placeholder="Bạn nghĩ gì về câu chuyện này?" required></textarea></div><button class="primary-btn" type="submit">GỬI BÌNH LUẬN ↗</button></form></section></div>${related.length?`<section class="related"><div class="wrap"><div class="section-header"><div><span class="kicker">[ KEEP READING ]</span><h2>Đọc tiếp<span>.</span></h2></div></div><div class="listing-grid">${related.map(card).join('')}</div></div></section>`:''}`;document.title=`${a.title} — MẠCH.`;renderComments(id);}
+function renderArticle(id){const a=byId(id);if(!a){render404();return;}const related=articles().filter(b=>b.id!==id&&(b.category===a.category)).slice(0,3);app.innerHTML=`<div class="article-head"><div class="kicker">[ ${escapeHTML(a.category.toUpperCase())} / LONG READ ]</div><h1>${escapeHTML(a.title)}</h1><p class="subtitle">${escapeHTML(a.excerpt)}</p>${articleMeta(a)}</div><figure class="wrap article-cover">${cover(a)}<figcaption>FIG. — MINH HỌA BIÊN TẬP / MẠCH. VISUAL RESEARCH</figcaption></figure><div class="wrap reading-grid"><aside class="article-tools" aria-label="Tương tác bài viết"><span class="kicker">READ / REACT</span><div class="mach-actions"><button type="button" class="mach-action ${state.metrics[a.id]?.liked?'active':''}" data-action="like" data-id="${escapeHTML(a.id)}" aria-label="Thích bài viết" aria-pressed="${!!state.metrics[a.id]?.liked}" title="Thích bài viết"><span class="mach-action-icon">${ico('heart')}</span><span class="mach-action-badge" data-metric-key="${escapeHTML(a.id)}" data-metric="likes">${shortCount(state.metrics[a.id]?.likes)}</span></button><button type="button" class="mach-action ${state.saved.includes(a.id)?'active':''}" data-action="bookmark" data-id="${escapeHTML(a.id)}" aria-label="Lưu bài viết" aria-pressed="${state.saved.includes(a.id)}" title="Lưu bài viết"><span class="mach-action-icon">${ico('bookmark')}</span><span class="mach-action-badge" data-metric-key="${escapeHTML(a.id)}" data-metric="saves">${shortCount(state.metrics[a.id]?.saves)}</span></button><button type="button" class="mach-action" data-action="share" data-id="${escapeHTML(a.id)}" title="Chia sẻ bài viết" aria-label="Chia sẻ bài viết"><span class="mach-action-icon">${ico('share')}</span><span class="mach-action-badge" data-metric-key="${escapeHTML(a.id)}" data-metric="shares">${shortCount(state.metrics[a.id]?.shares)}</span></button><button type="button" class="mach-action mach-action-link" data-action="copy" data-id="${escapeHTML(a.id)}" title="Sao chép liên kết" aria-label="Sao chép liên kết"><span class="mach-action-icon">${ico('link')}</span></button></div></aside><article class="article-content">${bodyMarkup(a.body,a.source_urls)}</article><span></span></div><div class="article-tail"><div class="tags"><span>${escapeHTML(a.category)}</span><span>MẠCH. JOURNAL</span><span>TECH / SCIENCE</span></div><div class="byline"><div class="avatar">${escapeHTML(a.author.charAt(0))}</div><div><strong>${escapeHTML(a.author)}</strong><p>Chia sẻ kiến thức và góc nhìn trên MẠCH.</p></div></div><section class="comments" id="comments"><h2>Bình luận <span id="comment-count">(0)</span></h2><div id="comment-list"><p class="dim">Đang tải bình luận...</p></div><form id="comment-form" data-id="${escapeHTML(a.id)}"><div class="field"><label for="comment-name">TÊN CỦA BẠN</label><input id="comment-name" name="name" maxlength="70" placeholder="Tên hiển thị" required></div><div class="field"><label for="comment-text">CHIA SẺ Ý KIẾN</label><textarea id="comment-text" name="text" rows="3" maxlength="1600" placeholder="Bạn nghĩ gì về câu chuyện này?" required></textarea></div><button class="primary-btn" type="submit">GỬI BÌNH LUẬN ↗</button></form></section></div>${related.length?`<section class="related"><div class="wrap"><div class="section-header"><div><span class="kicker">[ KEEP READING ]</span><h2>Đọc tiếp<span>.</span></h2></div></div><div class="listing-grid">${related.map(card).join('')}</div></div></section>`:''}`;document.title=`${a.title} — MẠCH.`;renderComments(id);}
 function render404(){app.innerHTML=`<div class="wrap"><div class="blank"><span class="kicker">ERROR / 404</span><h2>Không tìm thấy trang này.</h2><p>Có thể đường dẫn không còn tồn tại.</p><a href="#/" class="primary-btn">TRỞ VỀ TRANG CHỦ ↗</a></div></div>`;}
 function statusLabel(s){return {'pending':'CHỜ DUYỆT','published':'ĐÃ ĐĂNG','rejected':'TỪ CHỐI'}[s]||s;}
 async function api(action,method='GET',payload=null,auth=false){
