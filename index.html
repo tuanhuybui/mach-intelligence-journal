@@ -195,6 +195,34 @@
 @media(max-width:880px){.bench-tools{grid-template-columns:1fr 1fr}.bench-tools .bench-tool:nth-child(3){grid-column:1 / 3}.bench-reload{align-self:end}.bench-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:560px){.bench-page .page-head h1{font-size:clamp(34px,9vw,48px);letter-spacing:-1.6px}.bench-tools{grid-template-columns:1fr 1fr;gap:10px}.bench-tools .bench-tool:nth-child(1){grid-column:1/3}.bench-tools .bench-tool:nth-child(3){grid-column:1/3}.bench-stats .bench-stat{padding:13px 9px}.bench-stat b{font-size:21px}.bench-stat span{font-size:8px}.bench-reload{padding:0 9px}.bench-legend{gap:6px}.bench-pill{padding:7px 9px}}
 
+
+/* Benchmark v13. Mobile-first comparison, no invented cross-source score. */
+.bench-tools-v13{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
+.bench-tools-v13 .bench-tool:nth-child(3){grid-column:auto}
+.bench-tools-v13 .bench-reload{width:100%}
+.bench-compare{border:1px solid #c9c9c9;padding:22px;margin:28px 0 36px}
+.bench-compare-head,.bench-section-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.bench-compare-head h2,.bench-section-heading h2{font:600 30px var(--display);letter-spacing:-.8px;margin:0}
+.bench-section-heading{margin:30px 0 17px}.bench-section-heading span{font:500 10px var(--mono);color:#666}
+.bench-clear,.bench-pick,.bench-load-more{background:#fff;border:1px solid #111;padding:9px 12px;font:600 10px var(--mono);cursor:pointer}
+.bench-clear:hover,.bench-pick:hover,.bench-pick.active,.bench-load-more:hover{background:#111;color:#fff}
+.bench-pick:disabled{opacity:.35;cursor:not-allowed}
+.bench-chips{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0 20px}
+.bench-chip{border:1px solid #ddd;background:#f8f8f7;padding:9px 12px;font:500 11px var(--body);cursor:pointer}
+.bench-chip:hover{border-color:#111}.bench-chip span{margin-left:7px;color:#777}
+.bench-compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bench-matrix{border-collapse:collapse;width:100%;min-width:610px;table-layout:fixed}
+.bench-matrix th,.bench-matrix td{border-bottom:1px solid #e5e5e5;padding:12px 10px;text-align:left;vertical-align:middle}
+.bench-matrix th:first-child,.bench-matrix td:first-child{width:170px;font:600 10px/1.5 var(--mono);color:#666}
+.bench-matrix th{font:600 12px/1.45 var(--body);overflow-wrap:anywhere}
+.bench-matrix th a{color:#111}.bench-matrix th small{display:block;font:500 10px var(--mono);margin-top:4px;color:#777}
+.bench-matrix td{font:500 12px var(--mono);font-variant-numeric:tabular-nums}
+.bench-matrix .bench-best{background:#eaeae9;color:#111;font-weight:700}
+.bench-table{min-width:820px}.bench-score{font:700 16px var(--mono)}.bench-load-more{display:block;margin:22px auto}
+.bench-note{margin:12px 0 15px}.bench-sourcefoot a{color:#111}
+@media(max-width:880px){.bench-tools-v13{grid-template-columns:repeat(2,minmax(0,1fr))}.bench-tools-v13 .bench-tool:nth-child(3){grid-column:auto}}
+@media(max-width:560px){.bench-tools-v13{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bench-tools-v13 .bench-tool:nth-child(3){grid-column:auto}.bench-compare{padding:16px 12px}.bench-matrix th:first-child,.bench-matrix td:first-child{width:125px}.bench-compare-head h2,.bench-section-heading h2{font-size:24px}}
+
 </style>
 <style>
 .review-banner{border:1px solid #101112;background:#f2f2f0;padding:19px 22px;margin-bottom:22px;font:500 12px/1.7 var(--body)}.review-banner strong{font:700 11px var(--mono);letter-spacing:1px}.review-banner p{margin:8px 0 0;color:#555}.mach-admin-login{width:min(560px,100%);padding:34px;border:1px solid var(--black);margin:18px 0 100px;background:#f8f8f7}.mach-admin-login h2{font:600 35px var(--display);letter-spacing:-1px}.mach-admin-login p{color:var(--gray)}.admin-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:17px 0;border-top:1px solid var(--line);font:500 11px var(--mono)}.admin-toolbar button:first-of-type{margin-left:auto}.admin-tabs{display:flex;gap:0;border:1px solid var(--black);margin:20px 0 0;overflow-x:auto}.admin-tabs button{background:white;border:0;border-right:1px solid var(--black);padding:15px 20px;font:600 11px var(--mono);white-space:nowrap}.admin-tabs button.selected{background:#101112;color:white}.admin-item{border-bottom:1px solid var(--line);padding:26px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px}.admin-item h3{font:600 24px/1.35 var(--display);margin:8px 0}.admin-item p{font-size:13px;color:var(--gray)}.admin-item small{font:500 10px var(--mono);color:var(--gray)}.review-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:start;justify-content:flex-end}.review-actions button{background:white;border:1px solid #101112;padding:10px 14px;font:600 10px var(--mono);white-space:nowrap}.review-actions button:first-child{background:#101112;color:#fff}.admin-item details{margin-top:17px}.admin-item summary{cursor:pointer;font:600 10px var(--mono);border-bottom:1px solid var(--line);padding:8px 0}.admin-preview{font:15px/1.85 Georgia,serif;background:#fafaf9;padding:20px;margin:15px 0;max-height:500px;overflow-y:auto}.admin-comments{margin:60px 0 90px;border-top:1px solid var(--ink);padding-top:25px}.admin-comments h2{font:600 27px var(--display)}@media(max-width:720px){.admin-item{grid-template-columns:1fr}.review-actions{justify-content:flex-start}.admin-toolbar button:first-of-type{margin-left:0}.mach-admin-login{padding:22px}}
@@ -675,65 +703,85 @@ async function refreshPublished(){
  rememberFeed(v.posts||[]);state.feedLoaded=true;
  return v;
 }
-/* Benchmarks: separate measurement protocols; never synthesize a cross-provider score. */
-const BENCH_METRICS={
-  sweVerified:'SWE-bench Verified',mmluPro:'MMLU-Pro',gpqa:'GPQA Diamond',hle:"Humanity's Last Exam",
-  aime2026:'AIME 2026',hmmt2026:'HMMT 2026',swePro:'SWE-bench Pro',terminalBench:'Terminal-Bench',
-  gsm8k:'GSM8K',olmOcr:'olmOCR-bench',evasionBench:'EvasionBench',
-  intelligence:'Intelligence Index',coding:'Coding Index',agentic:'Agentic Index'
-};
-const benchmarkState={payload:null,loading:false,error:'',source:'swe',metric:'sweVerified',query:'',retrieved:0};
+
+/* MẠCH. Benchmark v13 — fresh models, apples-to-apples comparison. */
+const BENCH_METRICS={intelligence:'Intelligence Index',coding:'Coding Index',agentic:'Agentic Index',sweVerified:'SWE-bench Verified'};
+const benchmarkState={payload:null,loading:false,error:'',source:'aa',metric:'intelligence',query:'',age:'180',provider:'all',sort:'score',selected:[],touched:false,limit:45,retrieved:0};
 function benchFmtNum(n,d=1){return typeof n==='number'&&Number.isFinite(n)?new Intl.NumberFormat('vi-VN',{maximumFractionDigits:d}).format(n):'—'}
-function benchSafeUrl(url,backup){try{const u=new URL(url);return u.protocol==='https:'?u.href:backup;}catch{return backup;}}
-function benchData(){return benchmarkState.payload?.sources?.[benchmarkState.source]||null;}
-function benchMetrics(){const src=benchData();if(benchmarkState.source==='swe')return {sweVerified:'SWE-bench Verified'};
-if(benchmarkState.source==='aa')return {intelligence:'Intelligence Index',coding:'Coding Index',agentic:'Agentic Index'};
-const scores=src?.models||[];const available=Object.fromEntries(Object.entries(BENCH_METRICS).filter(([k])=>!['intelligence','coding','agentic'].includes(k)&&scores.some(x=>x.scores&&x.scores[k]!=null)));
-return Object.keys(available).length?available:{mmluPro:'MMLU-Pro'};
+function benchSafeUrl(url,backup){try{let u=new URL(url);return u.protocol==='https:'?u.href:backup}catch{return backup}}
+function benchDate(v){if(!/^\d{4}-\d{2}-\d{2}/.test(v||''))return 'Chưa công bố';try{return new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeZone:'UTC'}).format(new Date(v.slice(0,10)+'T00:00:00Z'))}catch{return 'Chưa công bố'}}
+function benchData(){return benchmarkState.payload?.sources?.[benchmarkState.source]||null}
+function benchMetrics(){if(benchmarkState.source==='swe')return {sweVerified:'SWE-bench Verified'};let out={intelligence:'Intelligence Index'};for(let k of ['coding','agentic'])if(benchData()?.models?.some(m=>typeof m.scores?.[k]==='number'))out[k]=BENCH_METRICS[k];return out}
+function benchRecent(m){if(benchmarkState.source!=='aa'||benchmarkState.age==='all')return true;if(!/^\d{4}-\d{2}-\d{2}$/.test(m.releaseDate||''))return false;let days=(Date.now()-Date.parse(m.releaseDate+'T00:00:00Z'))/864e5;return Number.isFinite(days)&&days<=Number(benchmarkState.age)&&days>=-7}
+function benchRows(){let q=normalized(benchmarkState.query.trim()),metric=benchmarkState.metric;const score=m=>typeof m.scores?.[metric]==='number'?m.scores[metric]:-Infinity;
+return (benchData()?.models||[]).filter(m=>(!q||normalized(m.name+' '+m.provider).includes(q))&&(benchmarkState.provider==='all'||m.provider===benchmarkState.provider)&&benchRecent(m)).sort((a,b)=>{
+if(benchmarkState.sort==='latest'){let d=(b.releaseDate||'').localeCompare(a.releaseDate||'');if(d)return d;}
+if(benchmarkState.sort==='cheap'&&benchmarkState.source==='aa'){let aP=a.priceIn??Infinity,bP=b.priceIn??Infinity;if(aP!==bP)return aP-bP;}
+if(benchmarkState.sort==='fast'&&benchmarkState.source==='aa'){let aS=a.tps??-Infinity,bS=b.tps??-Infinity;if(aS!==bS)return bS-aS;}
+let d=score(b)-score(a);return Number.isFinite(d)&&d!==0?d:a.name.localeCompare(b.name);
+})}
+function benchLink(m){return benchSafeUrl(m.url,benchmarkState.source==='aa'?'https://artificialanalysis.ai/models':'https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified')}
+function benchSelected(){let map=new Map((benchData()?.models||[]).map(m=>[m.id,m]));return benchmarkState.selected.map(k=>map.get(k)).filter(Boolean).slice(0,4)}
+function benchDefaultSelection(){if(benchmarkState.selected.length||benchmarkState.touched||benchmarkState.source!=='aa')return;benchmarkState.selected=(benchData()?.models||[]).filter(m=>typeof m.scores?.intelligence==='number').sort((a,b)=>b.scores.intelligence-a.scores.intelligence).slice(0,2).map(m=>m.id)}
+function benchCompareRow(label,models,fn,better='high',dec=1,suffix=''){const data=models.map(fn),valid=data.filter(v=>typeof v==='number'&&Number.isFinite(v));const best=valid.length>1?(better==='low'?Math.min(...valid):Math.max(...valid)):null;
+return '<tr><td>'+escapeHTML(label)+'</td>'+data.map(v=>'<td class="'+(best!==null&&v===best?'bench-best':'')+'">'+(v==null?'—':escapeHTML(benchFmtNum(v,dec)+suffix))+'</td>').join('')+'</tr>'}
+function renderBenchCompare(){let selected=benchSelected(),root=document.getElementById('bench-compare');if(!root)return;
+const chips=selected.map(m=>'<button type="button" class="bench-chip" data-bench-choice="remove" data-id="'+escapeHTML(m.id)+'">'+escapeHTML(m.name)+' <span>×</span></button>').join('');
+if(selected.length<2){root.innerHTML='<div class="bench-compare-head"><h2>So sánh model<span>.</span></h2><button type="button" class="bench-clear" data-bench-choice="clear">XÓA CHỌN</button></div><div class="bench-chips">'+chips+'</div><p class="bench-note">Chọn 2–4 model trong cùng nguồn ở bảng bên dưới để so sánh.</p>';return;}
+let rows='';
+if(benchmarkState.source==='aa'){
+for(let [k,v] of Object.entries(benchMetrics()))rows+=benchCompareRow(v+' / 100',selected,m=>m.scores?.[k]);
+rows+=benchCompareRow('Tốc độ · token/giây',selected,m=>m.tps,'high',0);
+rows+=benchCompareRow('TTFT · giây',selected,m=>m.ttft,'low',2);
+rows+=benchCompareRow('Giá input · USD/1M',selected,m=>m.priceIn,'low',3);
+rows+=benchCompareRow('Giá output · USD/1M',selected,m=>m.priceOut,'low',3);
+rows+=benchCompareRow('Ví dụ chi phí: 1M input + 250K output',selected,m=>m.priceIn!=null&&m.priceOut!=null?m.priceIn+0.25*m.priceOut:null,'low',3);
+rows+='<tr><td>Ngày ra mắt</td>'+selected.map(m=>'<td>'+escapeHTML(benchDate(m.releaseDate))+'</td>').join('')+'</tr>';
+}else rows+=benchCompareRow('SWE-bench Verified / 100',selected,m=>m.scores?.sweVerified,'high',2);
+root.innerHTML='<div class="bench-compare-head"><h2>So sánh model<span>.</span></h2><button type="button" class="bench-clear" data-bench-choice="clear">XÓA CHỌN</button></div><div class="bench-chips">'+chips+'</div><div class="bench-compare-scroll"><table class="bench-matrix"><thead><tr><th>CHỈ SỐ</th>'+selected.map(m=>'<th><a href="'+escapeHTML(benchLink(m))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(m.name)+'</a><small>'+escapeHTML(m.provider||'')+'</small></th>').join('')+'</tr></thead><tbody>'+rows+'</tbody></table></div><p class="bench-note">Ô xám là giá trị tốt nhất trong các model đã chọn. Chỉ so sánh cùng nguồn và cùng thước đo; không có dữ liệu ≠ 0.</p>';
 }
-function benchRows(){const s=benchData();if(!s?.models)return [];
-const metric=benchmarkState.metric,q=normalized(benchmarkState.query.trim());
-return s.models.filter(x=>x.scores&&typeof x.scores[metric]==='number'&&Number.isFinite(x.scores[metric])&&(!q||normalized(x.name+' '+(x.provider||'')).includes(q)))
-.sort((a,b)=>b.scores[metric]-a.scores[metric]).slice(0,120);
+function renderBenchRows(){const root=document.getElementById('bench-results');if(!root)return;const src=benchData(),rows=benchRows(),metric=benchmarkState.metric;const total=document.getElementById('bench-count');if(total)total.textContent=String(rows.filter(m=>typeof m.scores?.[metric]==='number').length);
+if(!src?.models?.length){root.innerHTML='<div class="bench-empty"><strong>Chưa có dữ liệu benchmark.</strong>'+escapeHTML(src?.error||benchmarkState.error||'Đang đồng bộ...')+'</div>';renderBenchCompare();return;}
+if(!rows.length){root.innerHTML='<div class="bench-empty"><strong>Không có model phù hợp.</strong>Thử chọn tất cả ngày ra mắt hoặc xóa bộ lọc.</div>';renderBenchCompare();return;}
+const aa=benchmarkState.source==='aa',sel=new Set(benchmarkState.selected);
+root.innerHTML='<div class="bench-table-scroll"><table class="bench-table"><thead><tr><th>#</th><th>MODEL / NHÀ PHÁT TRIỂN</th><th>'+escapeHTML(BENCH_METRICS[metric])+'</th><th>'+(aa?'TỐC ĐỘ · TTFT':'TRẠNG THÁI')+'</th><th>'+(aa?'GIÁ API':'NGUỒN')+'</th><th>SO SÁNH</th></tr></thead><tbody>'+rows.slice(0,benchmarkState.limit).map((m,i)=>{
+let v=m.scores?.[metric],selected=sel.has(m.id);
+return '<tr><td class="bench-rank">'+(i+1)+'</td><td><a class="bench-model-link" href="'+escapeHTML(benchLink(m))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(m.name)+'</a><div class="bench-provider">'+escapeHTML(m.provider||'—')+'</div>'+(aa?'<div class="bench-detail">RA MẮT '+escapeHTML(benchDate(m.releaseDate))+'</div>':'')+'</td><td><strong class="bench-score">'+(v!=null?benchFmtNum(v,1):'—')+'</strong>'+(v!=null?'<div class="bench-scoretrack"><div class="bench-scorefill" style="width:'+Math.max(0,Math.min(100,v))+'%"></div></div>':'')+'</td><td><span class="bench-detail">'+(aa?(m.tps!=null?benchFmtNum(m.tps,0)+' tok/s':'—')+'<br>TTFT '+(m.ttft!=null?benchFmtNum(m.ttft,2)+'s':'—'):(m.verified?'ĐÃ XÁC MINH':'CHƯA XÁC MINH'))+'</span></td><td><span class="bench-detail">'+(aa?'Input '+(m.priceIn!=null?'$'+benchFmtNum(m.priceIn,3):'—')+'<br>Output '+(m.priceOut!=null?'$'+benchFmtNum(m.priceOut,3):'—')+' / 1M tokens':'Hugging Face')+'</span></td><td><button type="button" class="bench-pick '+(selected?'active':'')+'" data-bench-choice="toggle" data-id="'+escapeHTML(m.id)+'" '+(!selected&&sel.size>=4?'disabled':'')+'>'+(selected?'✓ ĐÃ CHỌN':'+ CHỌN')+'</button></td></tr>';
+}).join('')+'</tbody></table></div>'+(rows.length>benchmarkState.limit?'<button class="bench-load-more" type="button" data-bench-choice="more">XEM THÊM '+(rows.length-benchmarkState.limit)+' MODEL</button>':'');renderBenchCompare();
 }
-function benchModelHref(model){if(benchmarkState.source==='swe')return benchSafeUrl(model.url,'https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified');
-if(benchmarkState.source==='aa')return 'https://artificialanalysis.ai/models';
-return benchSafeUrl('https://huggingface.co/'+model.name,'https://huggingface.co/datasets/OpenEvals/leaderboard-data');}
-function renderBenchRows(){const target=document.getElementById('bench-results');if(!target)return;const src=benchData(),rows=benchRows(),metric=benchmarkState.metric;
-const totals=document.getElementById('bench-count');if(totals)totals.textContent=String(rows.length);
-if(!src?.models?.length){target.innerHTML=`<div class="bench-empty"><strong>${escapeHTML(src?.status==='not_configured'?'Chưa kết nối Artificial Analysis.':'Chưa có dữ liệu từ nguồn này.')}</strong>${escapeHTML(src?.error||'Nguồn chưa phản hồi hoặc chưa có kết quả. Không hiển thị điểm giả lập.')}${src?.status==='not_configured'?'<p class="bench-subtle">Thêm ARTIFICIAL_ANALYSIS_API_KEY vào Vercel Environment Variables để kích hoạt chỉ số intelligence, tốc độ và giá API.</p>':''}</div>`;return;}
-if(!rows.length){target.innerHTML='<div class="bench-empty"><strong>Không có kết quả phù hợp.</strong>Hãy thử từ khóa khác hoặc chọn benchmark khác. Điểm chưa được chấm sẽ không hiển thị bằng 0.</div>';return;}
-const aa=benchmarkState.source==='aa',swe=benchmarkState.source==='swe';
-target.innerHTML=`<div class="bench-table-scroll"><table class="bench-table"><thead><tr><th>#</th><th>MODEL</th><th>ĐIỂM ${escapeHTML(BENCH_METRICS[metric]||metric)}</th><th>${aa?'TỐC ĐỘ / GIÁ API':swe?'XÁC MINH':'ĐỘ PHỦ / NGUỒN'}</th></tr></thead><tbody>${rows.map((m,i)=>{
-const score=m.scores[metric],link=benchModelHref(m);let extra='';
-if(aa)extra=`<span class="bench-detail">${m.tps!=null?benchFmtNum(m.tps,0)+' token/s':'— token/s'} · TTFT ${m.ttft!=null?benchFmtNum(m.ttft,2)+'s':'—'}<br>Input ${m.priceIn!=null?benchFmtNum(m.priceIn,3):'—'} · Output ${m.priceOut!=null?benchFmtNum(m.priceOut,3):'—'} / 1M tokens</span>`;
-else if(swe)extra=`<span class="bench-verify ${m.verified?'yes':''}">${m.verified?'ĐÃ XÁC MINH':'CHƯA XÁC MINH ĐỘC LẬP'}</span>`;
-else extra=`<span class="bench-detail">${m.coverage||1} phép đo có dữ liệu<br>${m.resultDate?'Kết quả: '+escapeHTML(m.resultDate):'Chưa có ngày chấm điểm'}</span>`;
-return `<tr><td class="bench-rank">${i+1}</td><td><a class="bench-model-link" target="_blank" rel="noopener noreferrer" href="${escapeHTML(link)}">${escapeHTML(m.name)}</a><div class="bench-provider">${escapeHTML(m.provider||'—')}</div></td><td><div class="bench-scoreline"><strong>${benchFmtNum(score,2)}${metric==='intelligence'||metric==='coding'||metric==='agentic'?'':'%'}</strong></div><div class="bench-scoretrack"><div class="bench-scorefill" style="width:${Math.min(100,Math.max(0,score))}%"></div></div></td><td>${extra}</td></tr>`;
-}).join('')}</tbody></table></div>`;
+function renderBench(){const src=benchData(),metrics=benchMetrics();if(!Object.keys(metrics).includes(benchmarkState.metric))benchmarkState.metric=Object.keys(metrics)[0];benchDefaultSelection();let opts=[...new Set((src?.models||[]).map(m=>m.provider).filter(Boolean))].sort(),modelCount=src?.models?.length||0;
+const retrieved=benchmarkState.payload?.fetched_at?new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(new Date(benchmarkState.payload.fetched_at)):'—';
+app.innerHTML='<div class="wrap bench-page">'+pageIntro('LLM Benchmark','Theo dõi model mới, so sánh điểm đánh giá, tốc độ và giá API từ nguồn độc lập.','MẠCH. / BENCHMARK LAB')+
+'<div class="bench-legend"><span class="bench-pill">NGUỒN <strong>'+escapeHTML(src?.name||'Đang đồng bộ')+'</strong></span><span class="bench-pill">TRUY XUẤT <strong>'+escapeHTML(retrieved)+'</strong></span><span class="bench-pill">INDEX <strong>'+escapeHTML(String(src?.indexVersion||'—'))+'</strong></span></div>'+
+'<div class="bench-note">Dữ liệu được đọc từ phiên bản mới nhất mà nguồn công bố; không có nghĩa đây là phép chấm điểm trực tiếp hôm nay. Ngày ra mắt model khác ngày đánh giá. '+escapeHTML(src?.warning||'')+'</div>'+
+'<div class="bench-tools bench-tools-v13"><div class="bench-tool"><label for="bench-source">NGUỒN</label><select id="bench-source"><option value="aa" '+(benchmarkState.source==='aa'?'selected':'')+'>Artificial Analysis (mới)</option><option value="swe" '+(benchmarkState.source==='swe'?'selected':'')+'>SWE-bench Verified</option></select></div>'+
+'<div class="bench-tool"><label for="bench-metric">THƯỚC ĐO</label><select id="bench-metric">'+Object.entries(metrics).map(([k,v])=>'<option value="'+escapeHTML(k)+'" '+(benchmarkState.metric===k?'selected':'')+'>'+escapeHTML(v)+'</option>').join('')+'</select></div>'+
+'<div class="bench-tool"><label for="bench-age">NGÀY RA MẮT</label><select id="bench-age" '+(benchmarkState.source!=='aa'?'disabled':'')+'><option value="90" '+(benchmarkState.age==='90'?'selected':'')+'>90 ngày gần nhất</option><option value="180" '+(benchmarkState.age==='180'?'selected':'')+'>180 ngày gần nhất</option><option value="all" '+(benchmarkState.age==='all'?'selected':'')+'>Tất cả</option></select></div>'+
+'<div class="bench-tool"><label for="bench-query">TÌM MODEL</label><input id="bench-query" type="search" autocomplete="off" value="'+escapeHTML(benchmarkState.query)+'" placeholder="GPT, Claude, Gemini, Qwen..."></div>'+
+'<div class="bench-tool"><label for="bench-provider">HÃNG</label><select id="bench-provider"><option value="all">Tất cả</option>'+opts.map(x=>'<option value="'+escapeHTML(x)+'" '+(benchmarkState.provider===x?'selected':'')+'>'+escapeHTML(x)+'</option>').join('')+'</select></div>'+
+'<div class="bench-tool"><label for="bench-sort">SẮP XẾP</label><select id="bench-sort"><option value="score">Điểm cao nhất</option><option value="latest" '+(benchmarkState.sort==='latest'?'selected':'')+'>Ra mắt mới nhất</option><option value="fast" '+(benchmarkState.sort==='fast'?'selected':'')+'>Nhanh nhất</option><option value="cheap" '+(benchmarkState.sort==='cheap'?'selected':'')+'>Input rẻ nhất</option></select></div>'+
+'<button class="bench-reload" type="button" data-action="bench-refresh" '+(benchmarkState.loading?'disabled':'')+'>'+(benchmarkState.loading?'ĐANG TẢI...':'ĐỒNG BỘ ↻')+'</button></div>'+
+'<div class="bench-stats"><div class="bench-stat"><b>'+modelCount+'</b><span>MODEL TỪ NGUỒN</span></div><div class="bench-stat"><b id="bench-count">—</b><span>CÓ ĐIỂM ĐƯỢC CHỌN</span></div><div class="bench-stat"><b>'+escapeHTML(benchmarkState.source==='aa'?'v'+String(src?.indexVersion||'—'):'HF')+'</b><span>VERSION / SOURCE</span></div></div>'+
+'<section class="bench-compare" id="bench-compare" aria-label="So sánh các model"></section><div class="bench-section-heading"><h2>Xếp hạng model<span>.</span></h2><span>Chọn tối đa 4 model để so sánh</span></div><div id="bench-results"></div>'+
+'<div class="bench-sourcefoot"><span>Điểm và giá: <a href="https://artificialanalysis.ai/" target="_blank" rel="noopener noreferrer">Artificial Analysis</a>; SWE-bench: <a href="https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified" target="_blank" rel="noopener noreferrer">Hugging Face</a>. Không trộn các benchmark.</span><a href="'+escapeHTML(benchSafeUrl(src?.url||'https://artificialanalysis.ai/data-api/docs','https://artificialanalysis.ai/data-api/docs'))+'" target="_blank" rel="noopener noreferrer">NGUỒN DỮ LIỆU</a></div></div>';
+document.title='LLM Benchmark — MẠCH.';renderBenchRows();
 }
-function renderBench(){const current=benchData(),metrics=benchMetrics(),metricOptions=Object.keys(metrics);if(!metricOptions.includes(benchmarkState.metric))benchmarkState.metric=metricOptions[0];
-const data=benchmarkState.payload,ret=benchmarkState.retrieved?new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(new Date(benchmarkState.retrieved)):'—';
-const metricDate=current?.updated||'Không công bố';const total=Array.isArray(current?.models)?current.models.length:0;
-app.innerHTML=`<div class="wrap bench-page">${pageIntro('LLM Benchmark','Theo dõi kết quả AI theo từng phép đánh giá. Minh bạch nguồn, ngày cập nhật và giới hạn của mỗi bảng xếp hạng.','MẠCH. / BENCHMARK LAB')}
-<div class="bench-note">Dữ liệu được đọc trực tiếp qua API có cấu trúc và lưu đệm ngắn để tải nhanh. Thời điểm truy xuất <strong>không phải</strong> thời điểm mô hình được đánh giá. Không cộng/trộn điểm SWE-bench, GPQA, MMLU-Pro và Intelligence Index thành một xếp hạng chung.</div>
-<div class="bench-legend"><span class="bench-pill">NGUỒN <strong>${escapeHTML(current?.name||'Đang đồng bộ')}</strong></span><span class="bench-pill">CẬP NHẬT NGUỒN <strong>${escapeHTML(metricDate)}</strong></span><span class="bench-pill">TRUY XUẤT <strong>${escapeHTML(ret)}</strong></span></div>
-<div class="bench-tools"><div class="bench-tool"><label for="bench-source">NGUỒN DỮ LIỆU</label><select id="bench-source"><option value="swe" ${benchmarkState.source==='swe'?'selected':''}>SWE-bench / Hugging Face</option><option value="open" ${benchmarkState.source==='open'?'selected':''}>OpenEvals (lịch sử)</option><option value="aa" ${benchmarkState.source==='aa'?'selected':''}>Artificial Analysis API</option></select></div>
-<div class="bench-tool"><label for="bench-metric">BÀI ĐÁNH GIÁ</label><select id="bench-metric">${metricOptions.map(k=>`<option value="${escapeHTML(k)}" ${k===benchmarkState.metric?'selected':''}>${escapeHTML(metrics[k])}</option>`).join('')}</select></div>
-<div class="bench-tool"><label for="bench-query">TÌM MODEL / HÃNG</label><input type="search" id="bench-query" value="${escapeHTML(benchmarkState.query)}" autocomplete="off" placeholder="DeepSeek, Qwen, GPT..."></div><button class="bench-reload" type="button" data-action="bench-refresh" ${benchmarkState.loading?'disabled':''}>${benchmarkState.loading?'ĐANG TẢI…':'LÀM MỚI'}</button></div>
-<div class="bench-stats"><div class="bench-stat"><b>${total||'—'}</b><span>MODEL TRONG NGUỒN</span></div><div class="bench-stat"><b id="bench-count">—</b><span>CÓ ĐIỂM PHÙ HỢP</span></div><div class="bench-stat"><b>${escapeHTML(benchmarkState.source==='open'?'Lịch sử':benchmarkState.source==='aa'?'API Key':'Công khai')}</b><span>LOẠI NGUỒN</span></div></div>
-<div id="bench-results">${benchmarkState.loading&&!data?'<div class="bench-empty"><strong>Đang lấy dữ liệu benchmark...</strong>Tải từ nguồn chính thức, không sử dụng bảng xếp hạng minh họa.</div>':''}</div>
-<div class="bench-sourcefoot"><span>${escapeHTML(benchmarkState.source==='swe'?'SWE-bench Verified: điểm của mô hình hoặc hệ thống agent; trạng thái verified được giữ nguyên theo Hugging Face.':benchmarkState.source==='open'?'OpenEvals: tập dữ liệu lịch sử được tập hợp từ kết quả riêng lẻ; chỉ so sánh các model có điểm trên cùng benchmark.':'Artificial Analysis: Intelligence, Coding, Agentic và dữ liệu API từ nguồn độc lập; yêu cầu key trên server.')}</span><a target="_blank" rel="noopener noreferrer" href="${escapeHTML(current?.url||'https://huggingface.co/docs/hub/leaderboard-data-guide')}">MỞ NGUỒN GỐC</a></div>
-<p class="bench-note">Nguồn: Hugging Face Dataset Leaderboard API, OpenEvals và Artificial Analysis. Không có dữ liệu ≠ điểm 0. Độ bao phủ, phiên bản benchmark và thiết lập chạy có thể khác nhau; vui lòng mở liên kết nguồn để kiểm chứng phương pháp.</p></div>`;
-document.title='LLM Benchmark — MẠCH.';
+function handleBenchChoice(btn){const type=btn.dataset.benchChoice,id=btn.dataset.id;
+if(type==='more'){benchmarkState.limit+=45;renderBenchRows();return;}
+benchmarkState.touched=true;
+if(type==='clear'){benchmarkState.selected=[];renderBenchRows();return;}
+if(type==='remove'||benchmarkState.selected.includes(id))benchmarkState.selected=benchmarkState.selected.filter(x=>x!==id);
+else if(benchmarkState.selected.length<4&&(benchData()?.models||[]).some(m=>m.id===id))benchmarkState.selected.push(id);
+else if(benchmarkState.selected.length>=4)notify('Tối đa 4 model để so sánh.');
 renderBenchRows();
 }
 async function fetchBenchmarks(force=false){if(benchmarkState.loading)return;if(benchmarkState.payload&&!force){renderBench();return;}
-benchmarkState.loading=true; if((location.hash||'')==='#/llm-benchmark')renderBench();
-try{const resp=await fetch('/api/index?action=benchmarks'+(force?'&refresh=1':''),{cache:force?'reload':'default'});const data=await resp.json();if(!resp.ok)throw Error(data.error||'Lỗi từ benchmark API');
-benchmarkState.payload=data;benchmarkState.retrieved=Date.now();benchmarkState.error='';}
-catch(e){benchmarkState.error=e.message;benchmarkState.payload={sources:{swe:{name:'Hugging Face',models:[],error:e.message},open:{name:'OpenEvals',models:[],error:e.message},aa:{name:'Artificial Analysis',models:[],error:e.message}}};}
-finally{benchmarkState.loading=false;if((location.hash||'')==='#/llm-benchmark')renderBench();}}
+benchmarkState.loading=true;if(location.hash==='#/llm-benchmark')renderBench();
+try{const resp=await fetch('/api/index?action=benchmarks'+(force?'&refresh=1':''),{cache:'no-store'});const data=await resp.json();if(!resp.ok||!data.sources?.aa)throw Error(data.error||'API benchmark không phản hồi');
+benchmarkState.payload=data;benchmarkState.retrieved=Date.now();benchmarkState.error='';
+}catch(e){benchmarkState.error=e.message;if(!benchmarkState.payload)benchmarkState.payload={sources:{aa:{name:'Artificial Analysis',models:[],error:e.message},swe:{name:'SWE-bench',models:[],error:e.message}}};}
+finally{benchmarkState.loading=false;if(location.hash==='#/llm-benchmark')renderBench();}
+}
 
 function renderAbout(){app.innerHTML=`<div class="wrap">${pageIntro('Về MẠCH.','Giải mã công nghệ. Khám phá tương lai. Đọc để hiểu, không chỉ để biết.','ABOUT / OUR MANIFESTO')}<div class="about-grid"><div><div class="kicker">[ AN INDEPENDENT INTELLIGENCE JOURNAL ]</div><h2>Chúng tôi tin rằng điều thú vị nhất nằm đằng sau những tiêu đề.</h2><p>MẠCH. là một mẫu tạp chí số độc lập dành cho những người theo dõi công nghệ, AI, Agent, khoa học và các ý tưởng có khả năng thay đổi cách con người sống và làm việc.</p><p>Thay vì mô phỏng bản sắc của một tờ báo khác, MẠCH. xây dựng cách trình bày riêng: bố cục giàu khoảng trắng, đen–trắng thuần túy, minh họa khoa học tự thiết kế và nhịp đọc tập trung vào nội dung.</p><p>Những bài viết được cung cấp sẵn trong demo là nội dung minh họa, không đại diện cho tin tức thời sự đã được xác minh. Đây không phải website liên kết với Forbes Việt Nam.</p><button class="write-btn" data-action="write">GÓP MỘT GÓC NHÌN <span><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div><aside><span class="kicker">OUR POINT OF VIEW</span><h3>Less noise.<br>More signal.<br>More questions.<br>Better thinking.</h3><span class="kicker" style="color:#aaa">MẠCH. / 2026 / VIETNAM</span></aside></div></div>`;document.title='Về MẠCH.';}
 function route({preserveScroll=false,skipTrack=false}={}){closeModal();const path=decodeURIComponent((location.hash||'#/').slice(1));state.limit=6;document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));
@@ -794,9 +842,9 @@ function handleAction(target){const action=target.dataset.action,id=target.datas
  case'approve-comment':moderate(id,'approve','comment');break;case'reject-comment':moderate(id,'reject','comment');break;
  case'admin-edit':openEditor(id);break;}
 }
-document.addEventListener('click',e=>{const benchRefresh=e.target.closest('[data-action="bench-refresh"]');if(benchRefresh){e.preventDefault();void fetchBenchmarks(true);return;}const b=e.target.closest('[data-action]');if(b){e.preventDefault();handleAction(b);return;}if(e.target.classList.contains('modal-backdrop'))closeModal();});
+document.addEventListener('click',e=>{const choice=e.target.closest('[data-bench-choice]');if(choice){e.preventDefault();handleBenchChoice(choice);return;}const benchRefresh=e.target.closest('[data-action="bench-refresh"]');if(benchRefresh){e.preventDefault();void fetchBenchmarks(true);return;}const b=e.target.closest('[data-action]');if(b){e.preventDefault();handleAction(b);return;}if(e.target.classList.contains('modal-backdrop'))closeModal();});
 document.addEventListener('input',e=>{if(e.target.id==='query'){state.query=e.target.value;updateSearch();}if(e.target.id==='bench-query'){benchmarkState.query=e.target.value;renderBenchRows();}});
-document.addEventListener('change',e=>{if(e.target.id==='bench-source'){benchmarkState.source=e.target.value;benchmarkState.metric=Object.keys(benchMetrics())[0];renderBench();}else if(e.target.id==='bench-metric'){benchmarkState.metric=e.target.value;renderBenchRows();}});
+document.addEventListener('change',e=>{if(e.target.id==='bench-source'){benchmarkState.source=e.target.value;benchmarkState.metric=Object.keys(benchMetrics())[0];renderBench();}else if(e.target.id==='bench-metric'){benchmarkState.metric=e.target.value;renderBenchRows();}else if(e.target.id==='bench-age'){benchmarkState.age=e.target.value;benchmarkState.limit=45;renderBenchRows();}else if(e.target.id==='bench-provider'){benchmarkState.provider=e.target.value;benchmarkState.limit=45;renderBenchRows();}else if(e.target.id==='bench-sort'){benchmarkState.sort=e.target.value;renderBenchRows();}});
 document.addEventListener('submit',e=>{if(['editor-form','comment-form','footer-subscribe','modal-subscribe','admin-login-form'].includes(e.target.id)){e.preventDefault();if(e.target.id==='editor-form')savePost(e.target);else if(e.target.id==='admin-login-form')adminLogin(e.target);else if(e.target.id==='comment-form')postComment(e.target);else subscribe(e.target);}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}});
 window.addEventListener('hashchange',route);

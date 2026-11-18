@@ -46,13 +46,23 @@ async function fetchBenchmarkJSON(url,key=''){
  return JSON.parse(body);
 }
 function finiteScore(n){return typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=100?n:null;}
+async function fetchAAAll(key){
+ const url='https://artificialanalysis.ai/api/v2/language/models/free?page=';
+ const first=await fetchBenchmarkJSON(url+'1',key);
+ if(!Array.isArray(first?.data))throw Error('Artificial Analysis returned invalid schema');
+ const total=Math.max(1,Math.min(6,Number(first.pagination?.total_pages)||1));
+ const rest=await Promise.allSettled(Array.from({length:total-1},(_,i)=>fetchBenchmarkJSON(url+(i+2),key)));
+ const rows=[...first.data];let failed=0;
+ for(const p of rest){if(p.status==='fulfilled'&&Array.isArray(p.value?.data))rows.push(...p.value.data);else failed++;}
+ return {...first,data:rows,partial:failed>0||Number(first.pagination?.total_pages)>6};
+}
 async function benchmarkPayload(){
  if(benchCache&&Date.now()<benchCacheUntil)return benchCache;
- const key=process.env.ARTIFICIAL_ANALYSIS_API_KEY||'';
+ const key=process.env.ARTIFICIAL_API_KEY||process.env.ARTIFICIAL_ANALYSIS_API_KEY||'';
  const [swe,open,aa]=await Promise.allSettled([
    fetchBenchmarkJSON(BENCH_SWE),
-   fetchBenchmarkJSON(BENCH_OPEN),
-   key?fetchBenchmarkJSON('https://artificialanalysis.ai/api/v2/language/models/free?page=1',key):Promise.resolve(null)
+   Promise.resolve(null), // OpenEvals 2026-03 archive excluded from live leaderboard
+   key?fetchAAAll(key):Promise.resolve(null)
  ]);
  const sources={
   swe:{name:'SWE-bench Verified / Hugging Face',url:'https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified',updated:'Không công bố',models:[]},
@@ -81,12 +91,12 @@ async function benchmarkPayload(){
  }else sources.open.error=open.status==='rejected'?String(open.reason?.message||open.reason):'Dữ liệu lịch sử không hợp lệ';
  if(!key){
   sources.aa.status='not_configured';
-  sources.aa.error='Chưa có ARTIFICIAL_ANALYSIS_API_KEY trên Vercel. Đây không phải kết quả xếp hạng.';
+  sources.aa.error='Chưa có ARTIFICIAL_API_KEY trong Vercel Production.';
  }else if(aa.status==='fulfilled'&&Array.isArray(aa.value?.data)){
   sources.aa.indexVersion=aa.value.intelligence_index_version;
-  sources.aa.updated='Phiên bản Index v'+String(aa.value.intelligence_index_version??'—');
-  sources.aa.models=aa.value.data.slice(0,250).map(v=>({
-   id:String(v.id||''),name:String(v.name||''),provider:String(v.model_creator?.name||''),
+  sources.aa.updated='Không có timestamp cho từng lượt đánh giá; Index v'+String(aa.value.intelligence_index_version??'—');
+  sources.aa.models=aa.value.data.slice(0,1200).map(v=>({
+   id:String(v.id||v.slug||''),name:String(v.name||''),provider:String(v.model_creator?.name||''),slug:String(v.slug||''),releaseDate:String(v.release_date||''),url:v.slug?'https://artificialanalysis.ai/models/'+encodeURIComponent(String(v.slug)):'https://artificialanalysis.ai/models',
    scores:{
     intelligence:finiteScore(v.evaluations?.artificial_analysis_intelligence_index),
     coding:finiteScore(v.evaluations?.artificial_analysis_coding_index),
@@ -97,10 +107,10 @@ async function benchmarkPayload(){
    priceIn:typeof v.pricing?.price_1m_input_tokens==='number'?v.pricing.price_1m_input_tokens:null,
    priceOut:typeof v.pricing?.price_1m_output_tokens==='number'?v.pricing.price_1m_output_tokens:null
   }));
-  if(aa.value.pagination?.has_more)sources.aa.warning='Chỉ hiển thị trang 1 theo quota API, không phải toàn bộ thị trường.';
- }else sources.aa.error=aa.status==='rejected'?String(aa.reason?.message||aa.reason):'Không nhận được dữ liệu Artificial Analysis';
+  if(aa.value.partial)sources.aa.warning='Một số trang hoặc model chưa được đồng bộ vì giới hạn API.';sources.aa.status='ok';
+ }else {sources.aa.status='error';sources.aa.error=aa.status==='rejected'?String(aa.reason?.message||aa.reason):'Không nhận được dữ liệu Artificial Analysis';}
  const payload={fetched_at:new Date().toISOString(),sources};
- benchCache=payload;benchCacheUntil=Date.now()+(sources.swe.models.length||sources.open.models.length||sources.aa.models.length?1800000:60000);
+ benchCache=payload;benchCacheUntil=Date.now()+(sources.aa.models.length?7200000:120000);
  return payload;
 }
 
@@ -108,7 +118,7 @@ module.exports=async function handler(req,res){
  const url=new URL(req.url,'https://mach.example'),action=url.searchParams.get('action')||'health';
  if(req.method==='OPTIONS')return send(res,405,{error:'Unsupported method'});
  try {
-  if(action==='benchmarks'&&req.method==='GET')return send(res,200,await benchmarkPayload(),1800);
+  if(action==='benchmarks'&&req.method==='GET'){const result=await benchmarkPayload();return send(res,200,result,result.sources.aa.status==='ok'?3600:120);}
   if(action==='health'&&req.method==='GET')return send(res,200,{mach:true,database:'connected',moderation:true,auth:'supabase',version:7});
   if(action==='metrics'&&req.method==='GET'){
    const ids=String(url.searchParams.get('ids')||'').split(',').filter(Boolean).slice(0,120);
