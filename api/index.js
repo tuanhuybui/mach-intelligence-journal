@@ -32,10 +32,83 @@ async function metricCounts(keys,visitor){
  const obj=await supa('POST',apiURL('rpc/mach_metrics_public'),{p_keys:keys,p_visitor:visitor||null});
  return obj||{articles:{},site:{pageviews:0,visitors_today:0}};
 }
+
+/* MẠCH. benchmark gateway. Fixed upstream URLs, cache and explicit provenance. */
+let benchCache=null,benchCacheUntil=0;
+const BENCH_OPEN='https://huggingface.co/datasets/OpenEvals/leaderboard-data/resolve/main/leaderboard.json';
+const BENCH_SWE='https://huggingface.co/api/datasets/SWE-bench/SWE-bench_Verified/leaderboard';
+async function fetchBenchmarkJSON(url,key=''){
+ const headers={'Accept':'application/json','User-Agent':'MACH-Journal-Benchmark/1.0'};
+ if(key)headers['x-api-key']=key;
+ const r=await fetch(url,{headers,signal:AbortSignal.timeout(9000)});
+ if(!r.ok)throw Error('Upstream '+new URL(url).hostname+' HTTP '+r.status);
+ const body=await r.text();if(body.length>2_000_000)throw Error('Upstream payload too large');
+ return JSON.parse(body);
+}
+function finiteScore(n){return typeof n==='number'&&Number.isFinite(n)&&n>=0&&n<=100?n:null;}
+async function benchmarkPayload(){
+ if(benchCache&&Date.now()<benchCacheUntil)return benchCache;
+ const key=process.env.ARTIFICIAL_ANALYSIS_API_KEY||'';
+ const [swe,open,aa]=await Promise.allSettled([
+   fetchBenchmarkJSON(BENCH_SWE),
+   fetchBenchmarkJSON(BENCH_OPEN),
+   key?fetchBenchmarkJSON('https://artificialanalysis.ai/api/v2/language/models/free?page=1',key):Promise.resolve(null)
+ ]);
+ const sources={
+  swe:{name:'SWE-bench Verified / Hugging Face',url:'https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified',updated:'Không công bố',models:[]},
+  open:{name:'OpenEvals / Hugging Face (lịch sử)',url:'https://huggingface.co/datasets/OpenEvals/leaderboard-data',updated:'Không công bố',models:[]},
+  aa:{name:'Artificial Analysis',url:'https://artificialanalysis.ai/data-api/docs',updated:'Theo API',models:[]}
+ };
+ if(swe.status==='fulfilled'&&Array.isArray(swe.value)){
+  sources.swe.models=swe.value.slice(0,600).map(v=>({
+   id:String(v.modelId||''),name:String(v.modelId||''),
+   provider:String(v.author?.name||v.author?.fullname||v.modelId?.split('/')[0]||''),
+   verified:v.verified===true,
+   url:typeof v.source?.url==='string'&&v.source.url.startsWith('https://')?v.source.url:null,
+   scores:{sweVerified:finiteScore(v.value)}
+  })).filter(x=>x.name&&x.scores.sweVerified!=null);
+ }else sources.swe.error=swe.status==='rejected'?String(swe.reason?.message||swe.reason):'Không có bảng xếp hạng hợp lệ';
+ if(open.status==='fulfilled'&&Array.isArray(open.value?.models)){
+  sources.open.updated=String(open.value.metadata?.lastUpdated||'Không công bố');
+  sources.open.models=open.value.models.slice(0,600).map(v=>{
+   const scores={},parts=Object.entries(v.benchmarks||{});let resultDate='';
+   for(const [metric,info] of parts){
+    const score=finiteScore(info?.score);if(score!=null)scores[metric]=score;
+    if(info?.date&&(!resultDate||info.date>resultDate))resultDate=info.date;
+   }
+   return {id:String(v.id||''),name:String(v.name||''),provider:String(v.provider||''),coverage:parts.length,resultDate,scores};
+  }).filter(x=>x.name&&Object.keys(x.scores).length);
+ }else sources.open.error=open.status==='rejected'?String(open.reason?.message||open.reason):'Dữ liệu lịch sử không hợp lệ';
+ if(!key){
+  sources.aa.status='not_configured';
+  sources.aa.error='Chưa có ARTIFICIAL_ANALYSIS_API_KEY trên Vercel. Đây không phải kết quả xếp hạng.';
+ }else if(aa.status==='fulfilled'&&Array.isArray(aa.value?.data)){
+  sources.aa.indexVersion=aa.value.intelligence_index_version;
+  sources.aa.updated='Phiên bản Index v'+String(aa.value.intelligence_index_version??'—');
+  sources.aa.models=aa.value.data.slice(0,250).map(v=>({
+   id:String(v.id||''),name:String(v.name||''),provider:String(v.model_creator?.name||''),
+   scores:{
+    intelligence:finiteScore(v.evaluations?.artificial_analysis_intelligence_index),
+    coding:finiteScore(v.evaluations?.artificial_analysis_coding_index),
+    agentic:finiteScore(v.evaluations?.artificial_analysis_agentic_index)
+   },
+   ttft:typeof v.performance?.median_time_to_first_token_seconds==='number'?v.performance.median_time_to_first_token_seconds:null,
+   tps:typeof v.performance?.median_output_tokens_per_second==='number'?v.performance.median_output_tokens_per_second:null,
+   priceIn:typeof v.pricing?.price_1m_input_tokens==='number'?v.pricing.price_1m_input_tokens:null,
+   priceOut:typeof v.pricing?.price_1m_output_tokens==='number'?v.pricing.price_1m_output_tokens:null
+  }));
+  if(aa.value.pagination?.has_more)sources.aa.warning='Chỉ hiển thị trang 1 theo quota API, không phải toàn bộ thị trường.';
+ }else sources.aa.error=aa.status==='rejected'?String(aa.reason?.message||aa.reason):'Không nhận được dữ liệu Artificial Analysis';
+ const payload={fetched_at:new Date().toISOString(),sources};
+ benchCache=payload;benchCacheUntil=Date.now()+(sources.swe.models.length||sources.open.models.length||sources.aa.models.length?1800000:60000);
+ return payload;
+}
+
 module.exports=async function handler(req,res){
  const url=new URL(req.url,'https://mach.example'),action=url.searchParams.get('action')||'health';
  if(req.method==='OPTIONS')return send(res,405,{error:'Unsupported method'});
  try {
+  if(action==='benchmarks'&&req.method==='GET')return send(res,200,await benchmarkPayload(),1800);
   if(action==='health'&&req.method==='GET')return send(res,200,{mach:true,database:'connected',moderation:true,auth:'supabase',version:7});
   if(action==='metrics'&&req.method==='GET'){
    const ids=String(url.searchParams.get('ids')||'').split(',').filter(Boolean).slice(0,120);

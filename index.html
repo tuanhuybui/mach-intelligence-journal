@@ -154,6 +154,47 @@
 /* Editorial drop cap: same serif family as article text, scaled for smaller viewports */
 @media(max-width:800px){.article-content p:first-of-type:first-letter{font-size:84px;line-height:.82;margin-top:7px;margin-right:11px}}
 @media(max-width:490px){.article-content p:first-of-type:first-letter{font-size:78px;line-height:.84;margin-top:6px;margin-right:10px}}
+/* MẠCH. / LLM Benchmark: source-specific, attributed, mobile-readable */
+.nav-benchmarks{font-weight:700!important}
+.bench-page{padding-bottom:85px}.bench-page .page-head{margin-bottom:25px}
+.bench-note{font:400 12px/1.75 var(--body);color:#686868;max-width:850px}
+.bench-legend{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font:600 10px var(--mono);letter-spacing:.035em;margin:18px 0 25px}
+.bench-pill{border:1px solid #d5d5d5;padding:8px 11px;color:#4d4d4d}
+.bench-pill strong{color:#111}
+.bench-tools{border-top:1px solid #222;border-bottom:1px solid #dedede;padding:18px 0;display:grid;grid-template-columns:180px minmax(170px,1fr) 180px auto;gap:12px;align-items:end}
+.bench-tool{display:flex;flex-direction:column;gap:7px;min-width:0}
+.bench-tool label{font:600 9px var(--mono);letter-spacing:.09em;color:#737373}
+.bench-tool select,.bench-tool input{box-sizing:border-box;min-width:0;width:100%;border:1px solid #d4d4d4;border-radius:2px;padding:11px 13px;background:white;color:#171717;font:500 12px var(--body);height:43px}
+.bench-tool select:focus-visible,.bench-tool input:focus-visible{outline:2px solid #171717;outline-offset:2px}
+.bench-reload{border:1px solid #171717;background:#171717;color:#fff;padding:0 16px;height:43px;font:600 10px var(--mono);cursor:pointer}
+.bench-reload:hover{background:#fff;color:#111}
+.bench-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#dedede;margin:24px 0}
+.bench-stat{background:#fff;padding:20px 16px;min-width:0}
+.bench-stat b{display:block;font:600 27px/1.2 var(--display);letter-spacing:-.9px;font-variant-numeric:tabular-nums}
+.bench-stat span{display:block;font:500 9px/1.6 var(--mono);color:#666;margin-top:8px;letter-spacing:.045em}
+.bench-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:2px solid #111}
+.bench-table{border-collapse:collapse;width:100%;min-width:620px;table-layout:fixed}
+.bench-table th{text-align:left;border-bottom:1px solid #111;font:600 10px var(--mono);color:#5a5a5a;padding:14px 13px;white-space:nowrap}
+.bench-table th:nth-child(1){width:48px}.bench-table th:nth-child(2){width:38%}.bench-table th:nth-child(3){width:20%}.bench-table th:nth-child(4){width:24%}
+.bench-table td{border-bottom:1px solid #e7e7e7;padding:15px 13px;vertical-align:middle;font:400 12px/1.55 var(--body)}
+.bench-table .bench-rank{font:600 15px var(--mono);color:#777}
+.bench-model-link{color:#171717;font:600 13px/1.4 var(--body);text-decoration:none;overflow-wrap:anywhere}
+.bench-model-link:hover{text-decoration:underline;text-underline-offset:3px}
+.bench-provider{font:500 11px var(--mono);color:#777;overflow-wrap:anywhere}
+.bench-scoreline{display:flex;align-items:center;justify-content:space-between;gap:12px;font:600 13px var(--mono);font-variant-numeric:tabular-nums}
+.bench-scoretrack{height:5px;background:#eee;margin-top:8px;position:relative;overflow:hidden}
+.bench-scorefill{height:100%;background:#141414}
+.bench-detail{font:500 10px/1.7 var(--mono);color:#707070}
+.bench-sourcefoot{border-bottom:1px solid #d2d2d2;padding:18px 0;margin-bottom:10px;font:400 12px/1.8 var(--body);color:#555;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.bench-sourcefoot a{color:#111;text-decoration:underline;text-underline-offset:3px}
+.bench-empty{padding:55px 14px;text-align:center;border-bottom:1px solid #d4d4d4;font-size:14px;line-height:1.8;color:#666}
+.bench-empty strong{display:block;color:#111;font:600 21px var(--display);margin-bottom:9px}
+.bench-verify{font:600 9px var(--mono);padding:4px 7px;border:1px solid #d5d5d5;display:inline-block;margin-top:5px}
+.bench-verify.yes{background:#111;color:white;border-color:#111}
+.bench-subtle{font-size:11px;color:#777;line-height:1.7}
+@media(max-width:880px){.bench-tools{grid-template-columns:1fr 1fr}.bench-tools .bench-tool:nth-child(3){grid-column:1 / 3}.bench-reload{align-self:end}.bench-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.bench-page .page-head h1{font-size:clamp(34px,9vw,48px);letter-spacing:-1.6px}.bench-tools{grid-template-columns:1fr 1fr;gap:10px}.bench-tools .bench-tool:nth-child(1){grid-column:1/3}.bench-tools .bench-tool:nth-child(3){grid-column:1/3}.bench-stats .bench-stat{padding:13px 9px}.bench-stat b{font-size:21px}.bench-stat span{font-size:8px}.bench-reload{padding:0 9px}.bench-legend{gap:6px}.bench-pill{padding:7px 9px}}
+
 </style>
 <style>
 .review-banner{border:1px solid #101112;background:#f2f2f0;padding:19px 22px;margin-bottom:22px;font:500 12px/1.7 var(--body)}.review-banner strong{font:700 11px var(--mono);letter-spacing:1px}.review-banner p{margin:8px 0 0;color:#555}.mach-admin-login{width:min(560px,100%);padding:34px;border:1px solid var(--black);margin:18px 0 100px;background:#f8f8f7}.mach-admin-login h2{font:600 35px var(--display);letter-spacing:-1px}.mach-admin-login p{color:var(--gray)}.admin-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:17px 0;border-top:1px solid var(--line);font:500 11px var(--mono)}.admin-toolbar button:first-of-type{margin-left:auto}.admin-tabs{display:flex;gap:0;border:1px solid var(--black);margin:20px 0 0;overflow-x:auto}.admin-tabs button{background:white;border:0;border-right:1px solid var(--black);padding:15px 20px;font:600 11px var(--mono);white-space:nowrap}.admin-tabs button.selected{background:#101112;color:white}.admin-item{border-bottom:1px solid var(--line);padding:26px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px}.admin-item h3{font:600 24px/1.35 var(--display);margin:8px 0}.admin-item p{font-size:13px;color:var(--gray)}.admin-item small{font:500 10px var(--mono);color:var(--gray)}.review-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:start;justify-content:flex-end}.review-actions button{background:white;border:1px solid #101112;padding:10px 14px;font:600 10px var(--mono);white-space:nowrap}.review-actions button:first-child{background:#101112;color:#fff}.admin-item details{margin-top:17px}.admin-item summary{cursor:pointer;font:600 10px var(--mono);border-bottom:1px solid var(--line);padding:8px 0}.admin-preview{font:15px/1.85 Georgia,serif;background:#fafaf9;padding:20px;margin:15px 0;max-height:500px;overflow-y:auto}.admin-comments{margin:60px 0 90px;border-top:1px solid var(--ink);padding-top:25px}.admin-comments h2{font:600 27px var(--display)}@media(max-width:720px){.admin-item{grid-template-columns:1fr}.review-actions{justify-content:flex-start}.admin-toolbar button:first-of-type{margin-left:0}.mach-admin-login{padding:22px}}
@@ -166,7 +207,7 @@
    <a class="logo" href="#/" aria-label="MẠCH. — Trang chủ">MẠCH<span class="logo-period">.</span><span class="logo-tag">THE INTELLIGENCE<br>JOURNAL</span></a>
    <div class="head-note"><span>GÓC NHÌN SÂU HƠN</span><span>VỀ THẾ GIỚI ĐANG THAY ĐỔI.</span></div>
    <div class="head-right"><span class="edition">[ VOLUME 01 · 2026 ]</span><button class="top-icon" data-action="search" aria-label="Tìm kiếm" title="Tìm kiếm"><span data-icon="search"></span></button><button class="top-icon bookmarks-count" data-action="saved" aria-label="Bài đã lưu" title="Bài đã lưu"><span data-icon="bookmark"></span><i id="saved-count"></i></button><button class="write-btn" data-action="write">VIẾT BÀI <span><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div>
- </div><div class="nav-edge"><nav class="wrap nav" aria-label="Chuyên mục" id="main-nav"><a href="#/" data-nav="all">TRANG CHỦ</a><a href="#/chuyen-muc/ai" data-nav="AI">AI</a><a href="#/chuyen-muc/ai-agent" data-nav="AI Agent">AI AGENT</a><a href="#/chuyen-muc/cong-nghe" data-nav="Công nghệ">CÔNG NGHỆ</a><a href="#/chuyen-muc/khoa-hoc" data-nav="Khoa học">KHOA HỌC</a><a href="#/chuyen-muc/robotics" data-nav="Robotics">ROBOTICS</a><a href="#/chuyen-muc/tuong-lai" data-nav="Tương lai">TƯƠNG LAI</a><a href="#/quan-ly" class="nav-my">DUYỆT BÀI / ADMIN</a><span class="nav-tail">SCROLL TO EXPLORE <span>↓</span></span></nav></div></header>
+ </div><div class="nav-edge"><nav class="wrap nav" aria-label="Chuyên mục" id="main-nav"><a href="#/" data-nav="all">TRANG CHỦ</a><a href="#/chuyen-muc/ai" data-nav="AI">AI</a><a href="#/chuyen-muc/ai-agent" data-nav="AI Agent">AI AGENT</a><a href="#/chuyen-muc/cong-nghe" data-nav="Công nghệ">CÔNG NGHỆ</a><a href="#/chuyen-muc/khoa-hoc" data-nav="Khoa học">KHOA HỌC</a><a href="#/chuyen-muc/robotics" data-nav="Robotics">ROBOTICS</a><a href="#/chuyen-muc/tuong-lai" data-nav="Tương lai">TƯƠNG LAI</a><a href="#/llm-benchmark" data-nav="benchmarks" class="nav-benchmarks">LLM BENCHMARK</a><a href="#/quan-ly" class="nav-my">DUYỆT BÀI / ADMIN</a><span class="nav-tail">SCROLL TO EXPLORE <span>↓</span></span></nav></div></header>
  <main id="app" tabindex="-1"></main>
  <footer class="footer"><div class="wrap footer-main"><div class="footer-brand"><a href="#/">MẠCH<span>.</span></a><p>Một nơi dành cho những bộ óc không ngừng tò mò.</p><div class="footer-cube">[ 01 / ∞ ]</div></div><div class="footer-group"><strong>KHÁM PHÁ</strong><a href="#/chuyen-muc/ai">Trí tuệ nhân tạo</a><a href="#/chuyen-muc/ai-agent">AI Agent</a><a href="#/chuyen-muc/khoa-hoc">Khoa học</a><a href="#/chuyen-muc/robotics">Robotics</a></div><div class="footer-group"><strong>CỘNG ĐỒNG</strong><a href="#/quan-ly">Quản trị / Duyệt bài</a><a href="#/da-luu">Danh sách đã lưu</a><a href="#/gioi-thieu">Về MẠCH.</a><button data-action="write">Đóng góp bài viết <svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></div><div class="footer-news"><span>HỌP THƯ TƯƠNG LAI / NEWSLETTER</span><h3>Mỗi tuần một góc nhìn mới.</h3><p>AI, khoa học và công nghệ — chỉ những điều đáng đọc.</p><form id="footer-subscribe"><input type="email" name="email" aria-label="Địa chỉ email" placeholder="Địa chỉ email của bạn" autocomplete="email" maxlength="254" required><button type="submit" aria-label="Đăng ký email" title="Đăng ký nhận bản tin"><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></form><p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p><small>Không spam. Chỉ nội dung thú vị.</small></div></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> MẠCH. — INDEPENDENT TECH JOURNAL</span><span><span class="mach-visitor-stat">LƯỢT TRUY CẬP: <span id="site-view-count">—</span> · KHÁCH HÔM NAY: <span id="site-visitor-count">—</span></span></span><button data-action="top">LÊN ĐẦU TRANG ↑</button></div></footer>
  <div id="modal-root"></div><div id="toast" role="status" aria-live="polite" class="toast"></div>
@@ -634,14 +675,75 @@ async function refreshPublished(){
  rememberFeed(v.posts||[]);state.feedLoaded=true;
  return v;
 }
+/* Benchmarks: separate measurement protocols; never synthesize a cross-provider score. */
+const BENCH_METRICS={
+  sweVerified:'SWE-bench Verified',mmluPro:'MMLU-Pro',gpqa:'GPQA Diamond',hle:"Humanity's Last Exam",
+  aime2026:'AIME 2026',hmmt2026:'HMMT 2026',swePro:'SWE-bench Pro',terminalBench:'Terminal-Bench',
+  gsm8k:'GSM8K',olmOcr:'olmOCR-bench',evasionBench:'EvasionBench',
+  intelligence:'Intelligence Index',coding:'Coding Index',agentic:'Agentic Index'
+};
+const benchmarkState={payload:null,loading:false,error:'',source:'swe',metric:'sweVerified',query:'',retrieved:0};
+function benchFmtNum(n,d=1){return typeof n==='number'&&Number.isFinite(n)?new Intl.NumberFormat('vi-VN',{maximumFractionDigits:d}).format(n):'—'}
+function benchSafeUrl(url,backup){try{const u=new URL(url);return u.protocol==='https:'?u.href:backup;}catch{return backup;}}
+function benchData(){return benchmarkState.payload?.sources?.[benchmarkState.source]||null;}
+function benchMetrics(){const src=benchData();if(benchmarkState.source==='swe')return {sweVerified:'SWE-bench Verified'};
+if(benchmarkState.source==='aa')return {intelligence:'Intelligence Index',coding:'Coding Index',agentic:'Agentic Index'};
+const scores=src?.models||[];const available=Object.fromEntries(Object.entries(BENCH_METRICS).filter(([k])=>!['intelligence','coding','agentic'].includes(k)&&scores.some(x=>x.scores&&x.scores[k]!=null)));
+return Object.keys(available).length?available:{mmluPro:'MMLU-Pro'};
+}
+function benchRows(){const s=benchData();if(!s?.models)return [];
+const metric=benchmarkState.metric,q=normalized(benchmarkState.query.trim());
+return s.models.filter(x=>x.scores&&typeof x.scores[metric]==='number'&&Number.isFinite(x.scores[metric])&&(!q||normalized(x.name+' '+(x.provider||'')).includes(q)))
+.sort((a,b)=>b.scores[metric]-a.scores[metric]).slice(0,120);
+}
+function benchModelHref(model){if(benchmarkState.source==='swe')return benchSafeUrl(model.url,'https://huggingface.co/datasets/SWE-bench/SWE-bench_Verified');
+if(benchmarkState.source==='aa')return 'https://artificialanalysis.ai/models';
+return benchSafeUrl('https://huggingface.co/'+model.name,'https://huggingface.co/datasets/OpenEvals/leaderboard-data');}
+function renderBenchRows(){const target=document.getElementById('bench-results');if(!target)return;const src=benchData(),rows=benchRows(),metric=benchmarkState.metric;
+const totals=document.getElementById('bench-count');if(totals)totals.textContent=String(rows.length);
+if(!src?.models?.length){target.innerHTML=`<div class="bench-empty"><strong>${escapeHTML(src?.status==='not_configured'?'Chưa kết nối Artificial Analysis.':'Chưa có dữ liệu từ nguồn này.')}</strong>${escapeHTML(src?.error||'Nguồn chưa phản hồi hoặc chưa có kết quả. Không hiển thị điểm giả lập.')}${src?.status==='not_configured'?'<p class="bench-subtle">Thêm ARTIFICIAL_ANALYSIS_API_KEY vào Vercel Environment Variables để kích hoạt chỉ số intelligence, tốc độ và giá API.</p>':''}</div>`;return;}
+if(!rows.length){target.innerHTML='<div class="bench-empty"><strong>Không có kết quả phù hợp.</strong>Hãy thử từ khóa khác hoặc chọn benchmark khác. Điểm chưa được chấm sẽ không hiển thị bằng 0.</div>';return;}
+const aa=benchmarkState.source==='aa',swe=benchmarkState.source==='swe';
+target.innerHTML=`<div class="bench-table-scroll"><table class="bench-table"><thead><tr><th>#</th><th>MODEL</th><th>ĐIỂM ${escapeHTML(BENCH_METRICS[metric]||metric)}</th><th>${aa?'TỐC ĐỘ / GIÁ API':swe?'XÁC MINH':'ĐỘ PHỦ / NGUỒN'}</th></tr></thead><tbody>${rows.map((m,i)=>{
+const score=m.scores[metric],link=benchModelHref(m);let extra='';
+if(aa)extra=`<span class="bench-detail">${m.tps!=null?benchFmtNum(m.tps,0)+' token/s':'— token/s'} · TTFT ${m.ttft!=null?benchFmtNum(m.ttft,2)+'s':'—'}<br>Input ${m.priceIn!=null?benchFmtNum(m.priceIn,3):'—'} · Output ${m.priceOut!=null?benchFmtNum(m.priceOut,3):'—'} / 1M tokens</span>`;
+else if(swe)extra=`<span class="bench-verify ${m.verified?'yes':''}">${m.verified?'ĐÃ XÁC MINH':'CHƯA XÁC MINH ĐỘC LẬP'}</span>`;
+else extra=`<span class="bench-detail">${m.coverage||1} phép đo có dữ liệu<br>${m.resultDate?'Kết quả: '+escapeHTML(m.resultDate):'Chưa có ngày chấm điểm'}</span>`;
+return `<tr><td class="bench-rank">${i+1}</td><td><a class="bench-model-link" target="_blank" rel="noopener noreferrer" href="${escapeHTML(link)}">${escapeHTML(m.name)}</a><div class="bench-provider">${escapeHTML(m.provider||'—')}</div></td><td><div class="bench-scoreline"><strong>${benchFmtNum(score,2)}${metric==='intelligence'||metric==='coding'||metric==='agentic'?'':'%'}</strong></div><div class="bench-scoretrack"><div class="bench-scorefill" style="width:${Math.min(100,Math.max(0,score))}%"></div></div></td><td>${extra}</td></tr>`;
+}).join('')}</tbody></table></div>`;
+}
+function renderBench(){const current=benchData(),metrics=benchMetrics(),metricOptions=Object.keys(metrics);if(!metricOptions.includes(benchmarkState.metric))benchmarkState.metric=metricOptions[0];
+const data=benchmarkState.payload,ret=benchmarkState.retrieved?new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(new Date(benchmarkState.retrieved)):'—';
+const metricDate=current?.updated||'Không công bố';const total=Array.isArray(current?.models)?current.models.length:0;
+app.innerHTML=`<div class="wrap bench-page">${pageIntro('LLM Benchmark','Theo dõi kết quả AI theo từng phép đánh giá. Minh bạch nguồn, ngày cập nhật và giới hạn của mỗi bảng xếp hạng.','MẠCH. / BENCHMARK LAB')}
+<div class="bench-note">Dữ liệu được đọc trực tiếp qua API có cấu trúc và lưu đệm ngắn để tải nhanh. Thời điểm truy xuất <strong>không phải</strong> thời điểm mô hình được đánh giá. Không cộng/trộn điểm SWE-bench, GPQA, MMLU-Pro và Intelligence Index thành một xếp hạng chung.</div>
+<div class="bench-legend"><span class="bench-pill">NGUỒN <strong>${escapeHTML(current?.name||'Đang đồng bộ')}</strong></span><span class="bench-pill">CẬP NHẬT NGUỒN <strong>${escapeHTML(metricDate)}</strong></span><span class="bench-pill">TRUY XUẤT <strong>${escapeHTML(ret)}</strong></span></div>
+<div class="bench-tools"><div class="bench-tool"><label for="bench-source">NGUỒN DỮ LIỆU</label><select id="bench-source"><option value="swe" ${benchmarkState.source==='swe'?'selected':''}>SWE-bench / Hugging Face</option><option value="open" ${benchmarkState.source==='open'?'selected':''}>OpenEvals (lịch sử)</option><option value="aa" ${benchmarkState.source==='aa'?'selected':''}>Artificial Analysis API</option></select></div>
+<div class="bench-tool"><label for="bench-metric">BÀI ĐÁNH GIÁ</label><select id="bench-metric">${metricOptions.map(k=>`<option value="${escapeHTML(k)}" ${k===benchmarkState.metric?'selected':''}>${escapeHTML(metrics[k])}</option>`).join('')}</select></div>
+<div class="bench-tool"><label for="bench-query">TÌM MODEL / HÃNG</label><input type="search" id="bench-query" value="${escapeHTML(benchmarkState.query)}" autocomplete="off" placeholder="DeepSeek, Qwen, GPT..."></div><button class="bench-reload" type="button" data-action="bench-refresh" ${benchmarkState.loading?'disabled':''}>${benchmarkState.loading?'ĐANG TẢI…':'LÀM MỚI'}</button></div>
+<div class="bench-stats"><div class="bench-stat"><b>${total||'—'}</b><span>MODEL TRONG NGUỒN</span></div><div class="bench-stat"><b id="bench-count">—</b><span>CÓ ĐIỂM PHÙ HỢP</span></div><div class="bench-stat"><b>${escapeHTML(benchmarkState.source==='open'?'Lịch sử':benchmarkState.source==='aa'?'API Key':'Công khai')}</b><span>LOẠI NGUỒN</span></div></div>
+<div id="bench-results">${benchmarkState.loading&&!data?'<div class="bench-empty"><strong>Đang lấy dữ liệu benchmark...</strong>Tải từ nguồn chính thức, không sử dụng bảng xếp hạng minh họa.</div>':''}</div>
+<div class="bench-sourcefoot"><span>${escapeHTML(benchmarkState.source==='swe'?'SWE-bench Verified: điểm của mô hình hoặc hệ thống agent; trạng thái verified được giữ nguyên theo Hugging Face.':benchmarkState.source==='open'?'OpenEvals: tập dữ liệu lịch sử được tập hợp từ kết quả riêng lẻ; chỉ so sánh các model có điểm trên cùng benchmark.':'Artificial Analysis: Intelligence, Coding, Agentic và dữ liệu API từ nguồn độc lập; yêu cầu key trên server.')}</span><a target="_blank" rel="noopener noreferrer" href="${escapeHTML(current?.url||'https://huggingface.co/docs/hub/leaderboard-data-guide')}">MỞ NGUỒN GỐC</a></div>
+<p class="bench-note">Nguồn: Hugging Face Dataset Leaderboard API, OpenEvals và Artificial Analysis. Không có dữ liệu ≠ điểm 0. Độ bao phủ, phiên bản benchmark và thiết lập chạy có thể khác nhau; vui lòng mở liên kết nguồn để kiểm chứng phương pháp.</p></div>`;
+document.title='LLM Benchmark — MẠCH.';
+renderBenchRows();
+}
+async function fetchBenchmarks(force=false){if(benchmarkState.loading)return;if(benchmarkState.payload&&!force){renderBench();return;}
+benchmarkState.loading=true; if((location.hash||'')==='#/llm-benchmark')renderBench();
+try{const resp=await fetch('/api/index?action=benchmarks'+(force?'&refresh=1':''),{cache:force?'reload':'default'});const data=await resp.json();if(!resp.ok)throw Error(data.error||'Lỗi từ benchmark API');
+benchmarkState.payload=data;benchmarkState.retrieved=Date.now();benchmarkState.error='';}
+catch(e){benchmarkState.error=e.message;benchmarkState.payload={sources:{swe:{name:'Hugging Face',models:[],error:e.message},open:{name:'OpenEvals',models:[],error:e.message},aa:{name:'Artificial Analysis',models:[],error:e.message}}};}
+finally{benchmarkState.loading=false;if((location.hash||'')==='#/llm-benchmark')renderBench();}}
+
 function renderAbout(){app.innerHTML=`<div class="wrap">${pageIntro('Về MẠCH.','Giải mã công nghệ. Khám phá tương lai. Đọc để hiểu, không chỉ để biết.','ABOUT / OUR MANIFESTO')}<div class="about-grid"><div><div class="kicker">[ AN INDEPENDENT INTELLIGENCE JOURNAL ]</div><h2>Chúng tôi tin rằng điều thú vị nhất nằm đằng sau những tiêu đề.</h2><p>MẠCH. là một mẫu tạp chí số độc lập dành cho những người theo dõi công nghệ, AI, Agent, khoa học và các ý tưởng có khả năng thay đổi cách con người sống và làm việc.</p><p>Thay vì mô phỏng bản sắc của một tờ báo khác, MẠCH. xây dựng cách trình bày riêng: bố cục giàu khoảng trắng, đen–trắng thuần túy, minh họa khoa học tự thiết kế và nhịp đọc tập trung vào nội dung.</p><p>Những bài viết được cung cấp sẵn trong demo là nội dung minh họa, không đại diện cho tin tức thời sự đã được xác minh. Đây không phải website liên kết với Forbes Việt Nam.</p><button class="write-btn" data-action="write">GÓP MỘT GÓC NHÌN <span><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div><aside><span class="kicker">OUR POINT OF VIEW</span><h3>Less noise.<br>More signal.<br>More questions.<br>Better thinking.</h3><span class="kicker" style="color:#aaa">MẠCH. / 2026 / VIETNAM</span></aside></div></div>`;document.title='Về MẠCH.';}
 function route({preserveScroll=false,skipTrack=false}={}){closeModal();const path=decodeURIComponent((location.hash||'#/').slice(1));state.limit=6;document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));
 if(!path||path==='/'){renderHome();document.querySelector('.nav [data-nav="all"]')?.classList.add('active');}
 else if(path.startsWith('/bai-viet/'))renderArticle(path.substring('/bai-viet/'.length));
 else if(path.startsWith('/chuyen-muc/')){const slug=path.slice('/chuyen-muc/'.length),cat=Object.keys(SLUGS).find(c=>SLUGS[c]===slug);if(!cat)render404();else{renderListing(cat,`Những phân tích, kiến thức và góc nhìn mới về ${cat.toLowerCase()}.`,articles().filter(a=>a.category===cat),`CATEGORY / ${cat.toUpperCase()}`);document.querySelector(`.nav [data-nav="${cat}"]`)?.classList.add('active');}}
+else if(path==='/llm-benchmark'){renderBench();document.querySelector('.nav [data-nav="benchmarks"]')?.classList.add('active');if(!benchmarkState.payload&&!benchmarkState.loading)void fetchBenchmarks();}
 else if(path==='/da-luu')renderListing('Đã lưu','Những câu chuyện bạn muốn quay lại đọc. Danh sách này được lưu trên trình duyệt.',articles().filter(a=>state.saved.includes(a.id)),'YOUR READING LIST');
 else if(path==='/quan-ly'){renderManager();if(state.auth&&!state.queue?.length)loadQueue();}else if(path==='/thong-ke'){renderAnalytics();if(state.auth&&!state.dashboard)loadAnalytics();}else if(path==='/gioi-thieu')renderAbout();else render404();
-document.getElementById('saved-count').textContent=state.saved.length?String(state.saved.length):'';document.getElementById('reading-progress').style.width='0';if(!preserveScroll)window.scrollTo({top:0,behavior:'instant'});paintMetrics();if(!skipTrack&&state.online&&!['/quan-ly','/thong-ke'].includes(path))void trackRoute(path);}
+document.getElementById('saved-count').textContent=state.saved.length?String(state.saved.length):'';document.getElementById('reading-progress').style.width='0';if(!preserveScroll)window.scrollTo({top:0,behavior:'instant'});paintMetrics();if(!skipTrack&&state.online&&!['/quan-ly','/thong-ke','/llm-benchmark'].includes(path))void trackRoute(path);}
 function showModal(title,content,extraClass=''){modal.innerHTML=`<div class="modal-backdrop"><div class="modal ${extraClass}" role="dialog" aria-modal="true" aria-label="${escapeHTML(title)}"><div class="modal-heading"><div><span class="kicker">MẠCH. / YOUR SPACE</span><h2>${escapeHTML(title)}</h2></div><button data-action="close" aria-label="Đóng">${ico('close')}</button></div><div class="modal-body">${content}</div></div></div>`;document.body.classList.add('modal-open');}
 function closeModal(){if(!modal.innerHTML)return;modal.innerHTML='';document.body.classList.remove('modal-open');}
 function openSearch(){showModal('Tìm trên MẠCH.',`<div class="search-box">${ico('search',23)}<input id="query" autocomplete="off" type="search" placeholder="Agent, khoa học lượng tử, AI..." aria-label="Tìm bài viết"></div><div class="search-summary" id="search-summary"></div><div id="search-results"></div>`,'search-modal');document.getElementById('query').value=state.query;updateSearch();document.getElementById('query').focus();}
@@ -692,8 +794,9 @@ function handleAction(target){const action=target.dataset.action,id=target.datas
  case'approve-comment':moderate(id,'approve','comment');break;case'reject-comment':moderate(id,'reject','comment');break;
  case'admin-edit':openEditor(id);break;}
 }
-document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b){e.preventDefault();handleAction(b);return;}if(e.target.classList.contains('modal-backdrop'))closeModal();});
-document.addEventListener('input',e=>{if(e.target.id==='query'){state.query=e.target.value;updateSearch();}});
+document.addEventListener('click',e=>{const benchRefresh=e.target.closest('[data-action="bench-refresh"]');if(benchRefresh){e.preventDefault();void fetchBenchmarks(true);return;}const b=e.target.closest('[data-action]');if(b){e.preventDefault();handleAction(b);return;}if(e.target.classList.contains('modal-backdrop'))closeModal();});
+document.addEventListener('input',e=>{if(e.target.id==='query'){state.query=e.target.value;updateSearch();}if(e.target.id==='bench-query'){benchmarkState.query=e.target.value;renderBenchRows();}});
+document.addEventListener('change',e=>{if(e.target.id==='bench-source'){benchmarkState.source=e.target.value;benchmarkState.metric=Object.keys(benchMetrics())[0];renderBench();}else if(e.target.id==='bench-metric'){benchmarkState.metric=e.target.value;renderBenchRows();}});
 document.addEventListener('submit',e=>{if(['editor-form','comment-form','footer-subscribe','modal-subscribe','admin-login-form'].includes(e.target.id)){e.preventDefault();if(e.target.id==='editor-form')savePost(e.target);else if(e.target.id==='admin-login-form')adminLogin(e.target);else if(e.target.id==='comment-form')postComment(e.target);else subscribe(e.target);}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}});
 window.addEventListener('hashchange',route);
