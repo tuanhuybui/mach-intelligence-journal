@@ -277,6 +277,48 @@
 @media(max-width:880px){.bench-tools-v13{grid-template-columns:repeat(2,minmax(0,1fr))}.bench-tools-v13 .bench-tool:nth-child(3){grid-column:auto}}
 @media(max-width:560px){.bench-tools-v13{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bench-tools-v13 .bench-tool:nth-child(3){grid-column:auto}.bench-compare{padding:16px 12px}.bench-matrix th:first-child,.bench-matrix td:first-child{width:125px}.bench-compare-head h2,.bench-section-heading h2{font-size:24px}}
 
+/* MẠCH. Benchmark v15 · compact ranking with separate release date */
+.bench-table--compact{width:100%;min-width:1130px;table-layout:fixed}
+.bench-table--compact .bench-col-rank{width:4%}
+.bench-table--compact .bench-col-model{width:31%}
+.bench-table--compact .bench-col-release{width:10%}
+.bench-table--compact .bench-col-score{width:15%}
+.bench-table--compact .bench-col-performance{width:16%}
+.bench-table--compact .bench-col-price{width:16%}
+.bench-table--compact .bench-col-action{width:8%}
+.bench-table--compact th{padding:13px 9px;font-size:9px;letter-spacing:.025em}
+.bench-table--compact td{padding:12px 9px;line-height:1.35}
+.bench-table--compact .bench-rank{font-size:13px}
+.bench-table--compact .bench-model-link{
+ display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+ white-space:nowrap;font-size:13px;line-height:1.35
+}
+.bench-table--compact .bench-provider{
+ display:block;margin-top:3px;overflow:hidden;text-overflow:ellipsis;
+ white-space:nowrap;font-size:10px
+}
+.bench-table--compact .bench-date{
+ font:500 11px/1.3 var(--mono);color:#646464;white-space:nowrap
+}
+.bench-table--compact .bench-scorecell{display:flex;gap:10px;align-items:center;min-width:0}
+.bench-table--compact .bench-score{flex-shrink:0;font-size:16px;line-height:1.25}
+.bench-table--compact .bench-scoretrack{
+ flex:1 1 auto;width:auto;min-width:35px;max-width:94px;height:4px;margin:0
+}
+.bench-table--compact .bench-inline-stat,.bench-table--compact .bench-inline-price{
+ display:flex;align-items:center;gap:7px;font:500 10px/1.35 var(--mono);
+ color:#5c5c5c;white-space:nowrap
+}
+.bench-table--compact .bench-inline-stat strong,.bench-table--compact .bench-inline-price strong{
+ color:#181818;font-weight:700
+}
+.bench-table--compact .bench-stat-dot{color:#bbb}
+.bench-table--compact .bench-pick{
+ min-width:72px;padding:8px;font-size:9px;white-space:nowrap;line-height:1.3
+}
+@media(max-width:800px){.bench-table--compact{min-width:1130px}}
+
+
 </style>
 <style>
 .review-banner{border:1px solid #101112;background:#f2f2f0;padding:19px 22px;margin-bottom:22px;font:500 12px/1.7 var(--body)}.review-banner strong{font:700 11px var(--mono);letter-spacing:1px}.review-banner p{margin:8px 0 0;color:#555}.mach-admin-login{width:min(560px,100%);padding:34px;border:1px solid var(--black);margin:18px 0 100px;background:#f8f8f7}.mach-admin-login h2{font:600 35px var(--display);letter-spacing:-1px}.mach-admin-login p{color:var(--gray)}.admin-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:17px 0;border-top:1px solid var(--line);font:500 11px var(--mono)}.admin-toolbar button:first-of-type{margin-left:auto}.admin-tabs{display:flex;gap:0;border:1px solid var(--black);margin:20px 0 0;overflow-x:auto}.admin-tabs button{background:white;border:0;border-right:1px solid var(--black);padding:15px 20px;font:600 11px var(--mono);white-space:nowrap}.admin-tabs button.selected{background:#101112;color:white}.admin-item{border-bottom:1px solid var(--line);padding:26px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px}.admin-item h3{font:600 24px/1.35 var(--display);margin:8px 0}.admin-item p{font-size:13px;color:var(--gray)}.admin-item small{font:500 10px var(--mono);color:var(--gray)}.review-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:start;justify-content:flex-end}.review-actions button{background:white;border:1px solid #101112;padding:10px 14px;font:600 10px var(--mono);white-space:nowrap}.review-actions button:first-child{background:#101112;color:#fff}.admin-item details{margin-top:17px}.admin-item summary{cursor:pointer;font:600 10px var(--mono);border-bottom:1px solid var(--line);padding:8px 0}.admin-preview{font:15px/1.85 Georgia,serif;background:#fafaf9;padding:20px;margin:15px 0;max-height:500px;overflow-y:auto}.admin-comments{margin:60px 0 90px;border-top:1px solid var(--ink);padding-top:25px}.admin-comments h2{font:600 27px var(--display)}@media(max-width:720px){.admin-item{grid-template-columns:1fr}.review-actions{justify-content:flex-start}.admin-toolbar button:first-of-type{margin-left:0}.mach-admin-login{padding:22px}}
@@ -798,14 +840,37 @@ rows+='<tr><td>Ngày ra mắt</td>'+selected.map(m=>'<td>'+escapeHTML(benchDate(
 }else rows+=benchCompareRow('SWE-bench Verified / 100',selected,m=>m.scores?.sweVerified,'high',2);
 root.innerHTML='<div class="bench-compare-head"><h2>So sánh model<span>.</span></h2><button type="button" class="bench-clear" data-bench-choice="clear">XÓA CHỌN</button></div><div class="bench-chips">'+chips+'</div><div class="bench-compare-scroll"><table class="bench-matrix"><thead><tr><th>CHỈ SỐ</th>'+selected.map(m=>'<th><a href="'+escapeHTML(benchLink(m))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(m.name)+'</a><small>'+escapeHTML(m.provider||'')+'</small></th>').join('')+'</tr></thead><tbody>'+rows+'</tbody></table></div><p class="bench-note">Ô xám là giá trị tốt nhất trong các model đã chọn. Chỉ so sánh cùng nguồn và cùng thước đo; không có dữ liệu ≠ 0.</p>';
 }
-function renderBenchRows(){const root=document.getElementById('bench-results');if(!root)return;const src=benchData(),rows=benchRows(),metric=benchmarkState.metric;const total=document.getElementById('bench-count');if(total)total.textContent=String(rows.filter(m=>typeof m.scores?.[metric]==='number').length);
-if(!src?.models?.length){root.innerHTML='<div class="bench-empty"><strong>Chưa có dữ liệu benchmark.</strong>'+escapeHTML(src?.error||benchmarkState.error||'Đang đồng bộ...')+'</div>';renderBenchCompare();return;}
-if(!rows.length){root.innerHTML='<div class="bench-empty"><strong>Không có model phù hợp.</strong>Thử chọn tất cả ngày ra mắt hoặc xóa bộ lọc.</div>';renderBenchCompare();return;}
-const aa=benchmarkState.source==='aa',sel=new Set(benchmarkState.selected);
-root.innerHTML='<div class="bench-table-scroll"><table class="bench-table"><thead><tr><th>#</th><th>MODEL / NHÀ PHÁT TRIỂN</th><th>'+escapeHTML(BENCH_METRICS[metric])+'</th><th>'+(aa?'TỐC ĐỘ · TTFT':'TRẠNG THÁI')+'</th><th>'+(aa?'GIÁ API':'NGUỒN')+'</th><th>SO SÁNH</th></tr></thead><tbody>'+rows.slice(0,benchmarkState.limit).map((m,i)=>{
-let v=m.scores?.[metric],selected=sel.has(m.id);
-return '<tr><td class="bench-rank">'+(i+1)+'</td><td><a class="bench-model-link" href="'+escapeHTML(benchLink(m))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(m.name)+'</a><div class="bench-provider">'+escapeHTML(m.provider||'—')+'</div>'+(aa?'<div class="bench-detail">RA MẮT '+escapeHTML(benchDate(m.releaseDate))+'</div>':'')+'</td><td><strong class="bench-score">'+(v!=null?benchFmtNum(v,1):'—')+'</strong>'+(v!=null?'<div class="bench-scoretrack"><div class="bench-scorefill" style="width:'+Math.max(0,Math.min(100,v))+'%"></div></div>':'')+'</td><td><span class="bench-detail">'+(aa?(m.tps!=null?benchFmtNum(m.tps,0)+' tok/s':'—')+'<br>TTFT '+(m.ttft!=null?benchFmtNum(m.ttft,2)+'s':'—'):(m.verified?'ĐÃ XÁC MINH':'CHƯA XÁC MINH'))+'</span></td><td><span class="bench-detail">'+(aa?'Input '+(m.priceIn!=null?'$'+benchFmtNum(m.priceIn,3):'—')+'<br>Output '+(m.priceOut!=null?'$'+benchFmtNum(m.priceOut,3):'—')+' / 1M tokens':'Hugging Face')+'</span></td><td><button type="button" class="bench-pick '+(selected?'active':'')+'" data-bench-choice="toggle" data-id="'+escapeHTML(m.id)+'" '+(!selected&&sel.size>=4?'disabled':'')+'>'+(selected?'✓ ĐÃ CHỌN':'+ CHỌN')+'</button></td></tr>';
-}).join('')+'</tbody></table></div>'+(rows.length>benchmarkState.limit?'<button class="bench-load-more" type="button" data-bench-choice="more">XEM THÊM '+(rows.length-benchmarkState.limit)+' MODEL</button>':'');renderBenchCompare();
+function renderBenchRows(){
+ const root=document.getElementById('bench-results');if(!root)return;
+ const src=benchData(),rows=benchRows(),metric=benchmarkState.metric;
+ const total=document.getElementById('bench-count');
+ if(total)total.textContent=String(rows.filter(m=>typeof m.scores?.[metric]==='number').length);
+ if(!src?.models?.length){
+  root.innerHTML='<div class="bench-empty"><strong>Chưa có dữ liệu benchmark.</strong>'+escapeHTML(src?.error||benchmarkState.error||'Đang đồng bộ...')+'</div>';
+  renderBenchCompare();return;
+ }
+ if(!rows.length){
+  root.innerHTML='<div class="bench-empty"><strong>Không có model phù hợp.</strong>Thử chọn tất cả ngày ra mắt hoặc xóa bộ lọc.</div>';
+  renderBenchCompare();return;
+ }
+ const aa=benchmarkState.source==='aa',selectedIds=new Set(benchmarkState.selected);
+ const columns='<colgroup><col class="bench-col-rank"><col class="bench-col-model"><col class="bench-col-release"><col class="bench-col-score"><col class="bench-col-performance"><col class="bench-col-price"><col class="bench-col-action"></colgroup>';
+ const head='<thead><tr><th>#</th><th>MODEL / NHÀ PHÁT TRIỂN</th><th>RA MẮT</th><th>'+escapeHTML(BENCH_METRICS[metric]||metric)+'</th><th>'+(aa?'TỐC ĐỘ / TTFT':'TRẠNG THÁI')+'</th><th>'+(aa?'GIÁ API · USD/1M':'NGUỒN')+'</th><th>SO SÁNH</th></tr></thead>';
+ const body=rows.slice(0,benchmarkState.limit).map((m,i)=>{
+  const score=benchNumeric(m.scores?.[metric]),chosen=selectedIds.has(m.id);
+  const scoreBar=score===null?'':'<div class="bench-scoretrack"><div class="bench-scorefill" style="width:'+Math.max(0,Math.min(100,score))+'%"></div></div>';
+  const perf=aa?'<div class="bench-inline-stat"><strong>'+(m.tps!=null?escapeHTML(benchFmtNum(m.tps,0))+' tok/s':'—')+'</strong><span class="bench-stat-dot">·</span><span>TTFT '+(m.ttft!=null?escapeHTML(benchFmtNum(m.ttft,2))+'s':'—')+'</span></div>':'<span class="bench-date">'+(m.verified?'ĐÃ XÁC MINH':'CHƯA XÁC MINH')+'</span>';
+  const price=aa?'<div class="bench-inline-price"><span>IN <strong>'+(m.priceIn!=null?'$'+escapeHTML(benchFmtNum(m.priceIn,3)):'—')+'</strong></span><span class="bench-stat-dot">·</span><span>OUT <strong>'+(m.priceOut!=null?'$'+escapeHTML(benchFmtNum(m.priceOut,3)):'—')+'</strong></span></div>':'<span class="bench-date">Hugging Face</span>';
+  return '<tr><td class="bench-rank">'+(i+1)+'</td>'+
+   '<td><a class="bench-model-link" title="'+escapeHTML(m.name)+'" href="'+escapeHTML(benchLink(m))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(m.name)+'</a><span class="bench-provider">'+escapeHTML(m.provider||'—')+'</span></td>'+
+   '<td><time class="bench-date">'+(aa&&m.releaseDate?escapeHTML(benchDate(m.releaseDate)):'—')+'</time></td>'+
+   '<td><div class="bench-scorecell"><strong class="bench-score">'+(score===null?'—':escapeHTML(benchFmtNum(score,1)))+'</strong>'+scoreBar+'</div></td>'+
+   '<td>'+perf+'</td><td>'+price+'</td>'+
+   '<td><button type="button" class="bench-pick '+(chosen?'active':'')+'" data-bench-choice="toggle" data-id="'+escapeHTML(m.id)+'" '+(!chosen&&selectedIds.size>=4?'disabled':'')+'>'+(chosen?'✓ ĐÃ CHỌN':'+ CHỌN')+'</button></td></tr>';
+ }).join('');
+ root.innerHTML='<div class="bench-table-scroll"><table class="bench-table bench-table--compact">'+columns+head+'<tbody>'+body+'</tbody></table></div>'+
+  (rows.length>benchmarkState.limit?'<button class="bench-load-more" type="button" data-bench-choice="more">XEM THÊM '+(rows.length-benchmarkState.limit)+' MODEL</button>':'');
+ renderBenchCompare();
 }
 function renderBench(){const src=benchData(),metrics=benchMetrics();if(!Object.keys(metrics).includes(benchmarkState.metric))benchmarkState.metric=Object.keys(metrics)[0];benchDefaultSelection();let opts=[...new Set((src?.models||[]).map(m=>m.provider).filter(Boolean))].sort(),modelCount=src?.models?.length||0;
 const retrieved=benchmarkState.payload?.fetched_at?new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(new Date(benchmarkState.payload.fetched_at)):'—';
