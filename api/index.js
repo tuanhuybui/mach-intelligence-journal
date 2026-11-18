@@ -3,7 +3,7 @@ const crypto = require('node:crypto');
 const BASE = process.env.SUPABASE_URL || 'https://njkpjhocifgbqyxzkeob.supabase.co';
 const KEY = process.env.SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_xda658Yjb7Zsd60HormYPA_hGD6tgLn';
 const CATS = ['AI','AI Agent','Công nghệ','Khoa học','Robotics','Tương lai'];
-const send=(res,code,body)=>{res.statusCode=code;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.end(JSON.stringify(body));};
+const send=(res,code,body,cacheSeconds=0)=>{res.statusCode=code;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control',cacheSeconds&&code===200?`public, s-maxage=${cacheSeconds}, stale-while-revalidate=90`:'no-store');res.setHeader('X-Content-Type-Options','nosniff');res.end(JSON.stringify(body));};
 const clean=(s,n)=>typeof s==='string'?s.trim().slice(0,n):'';
 const idOK=s=>typeof s==='string'&&/^[0-9a-f-]{36}$/i.test(s);
 const eq=(x,y)=>{if(typeof x!=='string'||!y||y.length<24)return false;const a=Buffer.from(x),b=Buffer.from(y);return a.length===b.length&&crypto.timingSafeEqual(a,b);};
@@ -64,6 +64,19 @@ module.exports=async function handler(req,res){
    const {jwt}=await ensureAdmin(req);
    const result=await supa('POST',apiURL('rpc/mach_metrics_admin'),{},jwt);
    return send(res,200,result||{totals:{},daily:[],top_articles:[]});
+  }
+  // Lightweight public feed: no full article bodies; cache briefly at Vercel's edge.
+  if(action==='feed'&&req.method==='GET'){
+   const rows=await supa('GET',apiURL('mach_articles','select=id,title,excerpt,category,author,image,source_type,agent_name,created_at,published_at,status&status=eq.published&order=published_at.desc&limit=100'));
+   return send(res,200,{posts:rows.map(mapPost)},15);
+  }
+  // Fetch a single article's complete body only when a reader opens it.
+  if(action==='article'&&req.method==='GET'){
+   const id=clean(url.searchParams.get('id'),110);
+   if(!idOK(id))return send(res,400,{error:'ID bài viết không hợp lệ.'});
+   const rows=await supa('GET',apiURL('mach_articles',`select=id,title,excerpt,category,author,image,body,source_urls,source_type,agent_name,created_at,published_at,status&id=eq.${id}&status=eq.published&limit=1`));
+   if(!rows?.length)return send(res,404,{error:'Không tìm thấy bài viết.'});
+   return send(res,200,{article:mapPost(rows[0])},30);
   }
   if(action==='posts'&&req.method==='GET'){const rows=await supa('GET',apiURL('mach_articles','select=id,title,excerpt,category,author,image,body,source_urls,source_type,agent_name,created_at,published_at,status&status=eq.published&order=published_at.desc&limit=100'));return send(res,200,{posts:rows.map(mapPost)});}
   if(action==='register'&&req.method==='POST'){
@@ -137,11 +150,8 @@ module.exports=async function handler(req,res){
   }
   if(action==='subscribe'&&req.method==='POST'){
    const email=clean(req.body?.email,254).toLowerCase();if(!/^\S+@\S+\.\S+$/.test(email))return send(res,400,{error:'Email không hợp lệ.'});
-   // Anonymous subscribers only have INSERT permission; ignore-duplicates needs SELECT.
-   // Use plain insert; consider unique-email conflicts as an already accepted signup.
-   try{await supa('POST',apiURL('mach_subscribers'),{email},undefined,'return=minimal');}
-   catch(err){if(err.status!==409)throw err;}
-   return send(res,200,{ok:true,message:'Đã nhận đăng ký bản tin.'});
+   await supa('POST',apiURL('mach_subscribers'),{email},undefined,'return=minimal,resolution=ignore-duplicates');
+   return send(res,200,{ok:true});
   }
   return send(res,404,{error:'Không tìm thấy API.'});
  }catch(e){console.error('[MACH]',action,e.status||500,String(e.message).slice(0,160));return send(res,e.status>=400&&e.status<500?e.status:502,{error:e.status===401?'Thông tin xác thực không hợp lệ.':(e.status===403?'Không đủ quyền thực hiện thao tác.':'Yêu cầu chưa thành công. Vui lòng thử lại.')});}
