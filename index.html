@@ -56,6 +56,28 @@
 .article-content .article-disclaimer{font-size:12px;color:#777;line-height:1.65;border-top:1px solid #dedede;padding-top:15px}
 @media(max-width:670px){.reference-list{grid-template-columns:1fr}.reference-heading{align-items:start}.reference-note{display:none}.article-sources{margin-top:44px}}
 
+
+/* MẠCH. editorial sources — compact and deduplicated */
+.article-content .article-sources{border-top:1px solid #171717;margin:46px 0 31px;padding:20px 0 0;clear:both}
+.article-content .reference-heading{margin:0 0 13px}
+.article-content .reference-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.article-content .reference-card{display:grid;grid-template-columns:29px minmax(0,1fr) 18px;gap:12px;align-items:center;min-height:62px;padding:12px 2px 12px 0;border-bottom:1px solid #dedede;box-sizing:border-box;text-decoration:none}
+.article-content .reference-card:hover{background:#f8f8f7}
+.article-content .reference-index{align-self:stretch;display:flex;align-items:center;border-right:1px solid #ddd;font:600 10px var(--mono);color:#888;padding-left:2px}
+.article-content .reference-description{min-width:0;gap:3px}
+.article-content .reference-description strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:650 14px/1.4 var(--body);overflow-wrap:anywhere}
+.article-content .reference-description small{font:500 10px/1.45 var(--mono);color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.article-content .reference-arrow svg{display:block;width:16px;height:16px}
+.article-content .reference-notes{margin-top:17px;background:#f7f7f6;border:1px solid #e7e7e7}
+.article-content .reference-notes summary{display:flex;align-items:center;justify-content:space-between;list-style:none;padding:13px 16px;cursor:pointer;font:600 10px var(--mono);letter-spacing:.05em}
+.article-content .reference-notes summary::-webkit-details-marker{display:none}
+.article-content .reference-notes svg{width:14px;height:14px}
+.article-content .reference-notes[open] svg{transform:rotate(180deg)}
+.article-content .reference-notes-body{border-top:1px solid #e5e5e5;padding:12px 16px}
+.article-content .reference-notes-body p{margin:0 0 7px;font:400 12px/1.75 var(--body);color:#666}
+.article-content .reference-notes-body p:last-child{margin-bottom:0}
+@media(max-width:670px){.article-content .article-sources{margin:34px 0 27px;padding:18px 0 0}.article-content .reference-heading{margin-bottom:10px}.article-content .reference-heading h2{font-size:clamp(27px,8vw,34px)}.article-content .reference-list{grid-template-columns:minmax(0,1fr)}.article-content .reference-card{grid-template-columns:29px minmax(0,1fr) 18px;gap:11px;min-height:59px;padding:12px 0}}
+
 /* MẠCH. / V7 · Reader engagement and transparent privacy-aware analytics */
 .mach-microstat{display:inline-flex;align-items:center;gap:5px;color:#7a7b7c;font:500 10px var(--mono);white-space:nowrap}
 .mach-microstat svg{width:12px;height:12px;stroke-width:1.8}
@@ -607,20 +629,48 @@ function inlineMd(text){
  });
  return escapeHTML(secure).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\uE100(\d+)\uE101/g,(_,i)=>pieces[Number(i)]||'');
 }
+function referenceLabel(url){
+ try{
+  const u=new URL(url),host=u.hostname.replace(/^www\./,'');
+  let slug=decodeURIComponent(u.pathname).split('/').filter(Boolean).pop()||'';
+  slug=slug.replace(/\.(?:html?|php|aspx?)$/i,'').replace(/-[a-z0-9]{6,12}$/i,x=>/\d/.test(x)?'':x);
+  let title=slug.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim();
+  if(title.length<10||title.length>150||/^(?:news|articles?|posts?|index)$/i.test(title))return host;
+  title=title.charAt(0).toUpperCase()+title.slice(1);
+  return title.replace(/\bopenai\b/gi,'OpenAI').replace(/\bai\b/gi,'AI').replace(/\bgpt\b/gi,'GPT').replace(/\bamd\b/gi,'AMD');
+ }catch{return ''}
+}
 function sourceCards(sourceText,provided){
- const entries=[];
- const lines=normalizeMd(sourceText).split(/\n/);
+ const entries=[],text=normalizeMd(sourceText);
  const explicit=(Array.isArray(provided)?provided:[]).filter(u=>typeof u==='string');
- const re=/\[([^\]]{1,280})\]\((https?:\/\/[^\s)]+)\)/;
- for(const line of lines){const m=line.match(re);if(m){const url=trustedLink(m[2]);if(url&&!entries.some(e=>e.url===url))entries.push({url,label:m[1].trim()});}}
- for(const raw of explicit){const url=trustedLink(raw);if(url&&!entries.some(e=>e.url===url))entries.push({url,label:''});}
+ const add=(input,label='')=>{
+  if(typeof input!=='string')return;
+  const url=trustedLink(input.trim().replace(/[.,;]+$/g,''));
+  if(!url)return;
+  const exists=entries.find(x=>x.url.replace(/\/$/,'')===url.replace(/\/$/,''));
+  if(exists){if(label&&!exists.label)exists.label=label;return;}
+  entries.push({url,label});
+ };
+ const mdLinks=/\[([^\]\n]{1,280})\]\((https?:\/\/[^\s)]+)\)/g;
+ const bare=text.replace(mdLinks,(_,name,url)=>{add(url,name.trim());return ' ';});
+ for(const match of bare.matchAll(/https?:\/\/[^\s<>"')\]]+/g))add(match[0]);
+ for(const raw of explicit)add(raw);
  if(!entries.length)return '<section class="article-sources"><h2>Nguồn tham khảo</h2><p class="dim">Chưa có liên kết nguồn được cung cấp.</p></section>';
+ const noteLines=text.split(/\n/).map(line=>line.trim()
+  .replace(/^(?:[-*]|\d+[.)])\s*/,'')
+  .replace(/\[[^\]\n]+\]\(https?:\/\/[^)]+\)/g,'')
+  .replace(/https?:\/\/[^\s<>"')\]]+/g,'')
+  .replace(/\s+/g,' ').trim()
+ ).filter(line=>line.length>3&&/[A-Za-zÀ-ỹ]/.test(line));
+ const noteBlock=noteLines.length
+  ?'<details class="reference-notes"><summary>GHI CHÚ NGUỒN <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="reference-notes-body">'+noteLines.map(line=>'<p>'+inlineMd(line)+'</p>').join('')+'</div></details>'
+  :'';
  const cards=entries.slice(0,12).map((e,i)=>{
    const host=new URL(e.url).hostname.replace(/^www\./,'');
-   const name=e.label||host;
+   const name=e.label||referenceLabel(e.url)||host;
    return `<a class="reference-card" href="${escapeHTML(e.url)}" rel="noopener noreferrer" target="_blank" aria-label="Mở ${escapeHTML(name)}"><span class="reference-index">${String(i+1).padStart(2,'0')}</span><span class="reference-description"><strong>${escapeHTML(name)}</strong><small>${escapeHTML(host)}</small></span><span class="reference-arrow" aria-hidden="true"><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>`;
  }).join('');
- return `<section class="article-sources" aria-label="Nguồn tham khảo"><div class="reference-heading"><div><span class="kicker">[ SOURCE NOTES / ${String(entries.length).padStart(2,'0')} ]</span><h2>Nguồn tham khảo<span>.</span></h2></div><span class="reference-note">Mở tài liệu gốc <svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div><div class="reference-list">${cards}</div></section>`;
+ return `<section class="article-sources" aria-label="Nguồn tham khảo"><div class="reference-heading"><div><span class="kicker">[ SOURCE NOTES / ${String(entries.length).padStart(2,'0')} ]</span><h2>Nguồn tham khảo<span>.</span></h2></div><span class="reference-note">Mở tài liệu gốc <svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div><div class="reference-list">${cards}</div>${noteBlock}</section>`;
 }
 function bodyMarkup(text,sourceUrls=[]){
  const raw=normalizeMd(text);
@@ -638,8 +688,7 @@ function bodyMarkup(text,sourceUrls=[]){
   if(ls.every(l=>/^\d+[.)]\s/.test(l)))return `<ol class="article-points">${ls.map(l=>`<li>${inlineMd(l.replace(/^\d+[.)]\s/,''))}</li>`).join('')}</ol>`;
   return `<p>${inlineMd(p).replace(/\n/g,'<br>')}</p>`;
  }).join('');
- const after=ref?refs.split(/\n\s*\n/).filter(x=>!/^\s*[-*]\s*\[/.test(x)).filter(x=>!/^\s*\d+\.\s*\[/.test(x)).map(x=>`<p class="article-disclaimer">${inlineMd(x.trim())}</p>`).join(''):'';
- return blocks+(ref||sourceUrls?.length?sourceCards(refs,sourceUrls):'')+after;
+ return blocks+(ref||sourceUrls?.length?sourceCards(refs,sourceUrls):'');
 }
 const articleRequests=new Map();
 async function loadFullArticle(id){
