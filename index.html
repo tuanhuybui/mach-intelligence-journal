@@ -78,6 +78,28 @@
 .article-content .reference-notes-body p:last-child{margin-bottom:0}
 @media(max-width:670px){.article-content .article-sources{margin:34px 0 27px;padding:18px 0 0}.article-content .reference-heading{margin-bottom:10px}.article-content .reference-heading h2{font-size:clamp(27px,8vw,34px)}.article-content .reference-list{grid-template-columns:minmax(0,1fr)}.article-content .reference-card{grid-template-columns:29px minmax(0,1fr) 18px;gap:11px;min-height:59px;padding:12px 0}}
 
+
+/* MẠCH. / About — newsroom identity, editorial transparency */
+.about-story{min-width:0}
+.about-story .about-intro{color:#282828;font-size:16px;line-height:1.85;margin:0 0 21px}
+.about-story .about-section{margin:29px 0 0}
+.about-story .about-section h3{font:600 20px/1.35 var(--display);letter-spacing:-.35px;margin:0 0 9px;color:#171717}
+.about-story .about-section p{margin:0 0 13px}
+.about-story .about-principles{padding:18px 0 17px;margin-top:23px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9}
+.about-story .about-principles .kicker{color:#777;font-size:10px}
+.about-story .about-principles p{margin:9px 0 0;line-height:1.75}
+.about-story .about-notice{border-left:3px solid #111;background:#f4f4f2;padding:19px 21px;margin:25px 0 27px}
+.about-story .about-notice strong{font:700 10px var(--mono);letter-spacing:.075em;color:#111}
+.about-story .about-notice p{font-size:13px;line-height:1.75;margin:9px 0 0;color:#444}
+.about-story .about-notice a{text-decoration:underline;text-underline-offset:3px}
+.about-grid aside .about-side-desc{color:#c1c1c1;font-size:13px;line-height:1.75;margin-top:20px}
+.about-grid aside .about-side-points{display:grid;gap:12px;margin:30px 0;border-top:1px solid #555;padding-top:22px}
+.about-grid aside .about-side-points div{display:flex;gap:12px;align-items:baseline}
+.about-grid aside .about-side-points b{font:600 10px var(--mono);color:#999}
+.about-grid aside .about-side-points span{font:500 11px/1.5 var(--mono);color:#e0e0e0}
+@media(max-width:800px){.about-grid{padding-top:25px}.about-story .about-intro{font-size:15px}.about-grid h2{font-size:clamp(31px,7vw,43px);letter-spacing:-1.3px}.about-grid aside{padding:29px}.about-grid aside h3{font-size:31px}}
+@media(max-width:490px){.about-story .about-section h3{font-size:19px}.about-story .about-notice{padding:16px 17px}}
+
 /* MẠCH. / V7 · Reader engagement and transparent privacy-aware analytics */
 .mach-microstat{display:inline-flex;align-items:center;gap:5px;color:#7a7b7c;font:500 10px var(--mono);white-space:nowrap}
 .mach-microstat svg{width:12px;height:12px;stroke-width:1.8}
@@ -955,7 +977,53 @@ benchmarkState.payload=data;benchmarkState.retrieved=Date.now();benchmarkState.e
 finally{benchmarkState.loading=false;if(location.hash==='#/llm-benchmark')renderBench();}
 }
 
-function renderAbout(){app.innerHTML=`<div class="wrap">${pageIntro('Về MẠCH.','Giải mã công nghệ. Khám phá tương lai. Đọc để hiểu, không chỉ để biết.','ABOUT / OUR MANIFESTO')}<div class="about-grid"><div><div class="kicker">[ AN INDEPENDENT INTELLIGENCE JOURNAL ]</div><h2>Chúng tôi tin rằng điều thú vị nhất nằm đằng sau những tiêu đề.</h2><p>MẠCH. là một mẫu tạp chí số độc lập dành cho những người theo dõi công nghệ, AI, Agent, khoa học và các ý tưởng có khả năng thay đổi cách con người sống và làm việc.</p><p>Thay vì mô phỏng bản sắc của một tờ báo khác, MẠCH. xây dựng cách trình bày riêng: bố cục giàu khoảng trắng, đen–trắng thuần túy, minh họa khoa học tự thiết kế và nhịp đọc tập trung vào nội dung.</p><p>Những bài viết được cung cấp sẵn trong demo là nội dung minh họa, không đại diện cho tin tức thời sự đã được xác minh. Đây không phải website liên kết với Forbes Việt Nam.</p><button class="write-btn" data-action="write">GÓP MỘT GÓC NHÌN <span><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div><aside><span class="kicker">OUR POINT OF VIEW</span><h3>Less noise.<br>More signal.<br>More questions.<br>Better thinking.</h3><span class="kicker" style="color:#aaa">MẠCH. / 2026 / VIETNAM</span></aside></div></div>`;document.title='Về MẠCH.';}
+function renderAbout(){
+ app.innerHTML=`<div class="wrap">
+ ${pageIntro('Về MẠCH.','Giải mã công nghệ. Khám phá tương lai. Đọc để hiểu, không chỉ để biết.','ABOUT / OUR MANIFESTO')}
+ <div class="about-grid">
+  <div class="about-story">
+   <span class="kicker">[ AN INDEPENDENT INTELLIGENCE JOURNAL ]</span>
+   <h2>Chúng tôi tin rằng điều thú vị nhất nằm đằng sau những tiêu đề.</h2>
+   <p class="about-intro">MẠCH. là tạp chí số độc lập dành cho những người muốn hiểu sâu hơn về trí tuệ nhân tạo, AI Agent, khoa học, robotics và các công nghệ đang định hình cách con người sống, học tập và làm việc. Chúng tôi không chỉ theo dõi điều gì mới xuất hiện, mà còn đặt câu hỏi: Vì sao nó quan trọng, công nghệ ấy thực sự làm được gì và tác động của nó nằm ở đâu?</p>
+   <section class="about-section">
+    <h3>Đọc để hiểu, không chỉ để biết.</h3>
+    <p>Giữa dòng tin tức liên tục, MẠCH. hướng đến những bài viết có bối cảnh, giải thích dễ tiếp cận và gợi mở góc nhìn độc lập. Từ các mô hình ngôn ngữ lớn, hệ thống Agent tự chủ, robot, bán dẫn đến những tiến bộ trong nghiên cứu khoa học, mỗi chủ đề đều được nhìn nhận dưới góc độ ứng dụng, giới hạn kỹ thuật và ý nghĩa thực tế.</p>
+    <p>Chúng tôi ưu tiên trải nghiệm đọc tối giản: nội dung rõ ràng, trình bày mạch lạc, minh họa trực quan và các liên kết nguồn để người đọc có thể tự tìm hiểu sâu hơn.</p>
+   </section>
+   <section class="about-section">
+    <h3>Một tòa soạn vận hành cùng AI.</h3>
+    <p>MẠCH. ứng dụng AI vào quy trình sản xuất nội dung theo hướng <strong>bán tự động</strong>. Hệ thống có thể hỗ trợ phát hiện chủ đề, tìm kiếm tài liệu công khai, tổng hợp thông tin, biên soạn bản thảo và cập nhật bài viết theo lịch. Đây cũng là nơi chúng tôi thử nghiệm cách AI Agent tham gia vào công việc biên tập và vận hành một chuyên trang số.</p>
+    <p>Một số bài viết được <strong>ChatGPT Newsroom tự biên soạn và tự xuất bản</strong> theo lịch và quy tắc đã cấu hình; nội dung do độc giả gửi được đưa qua quy trình kiểm duyệt của quản trị viên trước khi đăng. Việc tự động hóa giúp cập nhật thường xuyên hơn, nhưng không đồng nghĩa mọi câu chữ hay nguồn trích dẫn đều đã được con người xác minh độc lập.</p>
+   </section>
+   <section class="about-section">
+    <h3>Minh bạch về nguồn và giới hạn.</h3>
+    <p>Chúng tôi khuyến khích độc giả phân biệt giữa thông tin từ tài liệu gốc, nhận định của tác giả và nội dung do AI tổng hợp. Các đánh giá, số liệu benchmark, thông số công nghệ và thông báo sản phẩm có thể thay đổi theo thời gian. Một bài viết có dẫn nguồn vẫn có khả năng thiếu bối cảnh, diễn giải chưa chính xác hoặc sử dụng tài liệu chưa được cập nhật.</p>
+   </section>
+   <div class="about-notice" role="note">
+    <strong>LƯU Ý VỀ NỘI DUNG DO AI BIÊN SOẠN</strong>
+    <p>Một phần nội dung trên MẠCH. được AI tự viết, tổng hợp và cập nhật bán tự động. Vui lòng <strong>kiểm chứng thông tin bằng các liên kết tại mục “Nguồn tham khảo” trong từng bài viết</strong>, ưu tiên tài liệu và công bố chính thức. Không nên xem bài viết do AI tạo là kết luận đã được kiểm chứng tuyệt đối, đặc biệt với các thông tin mới, số liệu kỹ thuật hoặc quyết định quan trọng.</p>
+   </div>
+   <div class="about-principles">
+    <span class="kicker">[ OPEN READING / CRITICAL THINKING ]</span>
+    <p>MẠCH. mong muốn trở thành nơi giúp bạn cập nhật kiến thức, hiểu bản chất công nghệ và đặt ra những câu hỏi tốt hơn — với sự tò mò, tinh thần kiểm chứng và góc nhìn riêng.</p>
+   </div>
+   <button class="write-btn" data-action="write">GÓP MỘT GÓC NHÌN <span><svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+  </div>
+  <aside>
+   <span class="kicker">HOW MẠCH. WORKS</span>
+   <h3>Less noise.<br>More signal.<br>Better questions.</h3>
+   <p class="about-side-desc">Một thử nghiệm báo chí công nghệ và vận hành nội dung cùng AI, đề cao khả năng truy xuất nguồn và tư duy phản biện.</p>
+   <div class="about-side-points">
+    <div><b>01</b><span>AI-ASSISTED EDITORIAL</span></div>
+    <div><b>02</b><span>SEMI-AUTOMATED PUBLISHING</span></div>
+    <div><b>03</b><span>SOURCE-TRACEABLE READING</span></div>
+    <div><b>04</b><span>INDEPENDENT THINKING</span></div>
+   </div>
+   <span class="kicker" style="color:#aaa">MẠCH. / VIETNAM</span>
+  </aside>
+ </div></div>`;
+ document.title='Về MẠCH.';
+}
 function route({preserveScroll=false,skipTrack=false}={}){closeModal();const path=decodeURIComponent((location.hash||'#/').slice(1));state.limit=6;document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));
 if(!path||path==='/'){renderHome();document.querySelector('.nav [data-nav="all"]')?.classList.add('active');}
 else if(path.startsWith('/bai-viet/'))renderArticle(path.substring('/bai-viet/'.length));
