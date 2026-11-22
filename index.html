@@ -703,15 +703,49 @@ function renderListing(title,desc,list,code){app.innerHTML=`<div class="wrap">${
 // Escape HTML first; create anchors only from validated http(s) links.
 const normalizeMd=text=>String(text||'').replace(/\]\\\(/g,'](').replace(/\\\)/g,')').replace(/\\:/g,':');
 function trustedLink(raw){try{const u=new URL(raw.replace(/&amp;/g,'&'));return /^(https?:)$/.test(u.protocol)&&u.username===''&&u.password===''&&u.hostname?u.href:null;}catch{return null;}}
+function trimBareArticleUrl(raw){
+ let url=raw;
+ while(url){
+  const ch=url.slice(-1);
+  if(/[.,;:!?]/.test(ch)){url=url.slice(0,-1);continue;}
+  const pairs={')':'(',']':'[','}':'{'};
+  const open=pairs[ch];
+  if(open && url.split(ch).length>url.split(open).length){url=url.slice(0,-1);continue;}
+  break;
+ }
+ return url;
+}
+
+function articleSiteLabel(url){
+ try{
+  const host=new URL(url).hostname.replace(/^www\./i,'').toLowerCase();
+  const known={'news.mit.edu':'MIT News','arxiv.org':'arXiv','doi.org':'DOI','nature.com':'Nature','science.org':'Science','journals.aps.org':'APS Journals','physics.aps.org':'APS Physics','openai.com':'OpenAI','research.google':'Google Research','blog.google':'Google Blog','github.com':'GitHub','anthropic.com':'Anthropic','nvidia.com':'NVIDIA','huggingface.co':'Hugging Face','reuters.com':'Reuters','apnews.com':'AP News','theverge.com':'The Verge'};
+  return known[host]||host;
+ }catch{return url;}
+}
+
+function articleAnchor(url,labelHTML){
+ const href=trustedLink(url);
+ if(!href)return null;
+ return `<a class="article-link" href="${escapeHTML(href)}" target="_blank" rel="noopener noreferrer" title="Mở nguồn: ${escapeHTML(new URL(href).hostname)}">${labelHTML}<span aria-hidden="true" class="external-mark"> <svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>`;
+}
+
 function inlineMd(text){
  const pieces=[];
- const secure=normalizeMd(text).replace(/\[([^\]\n]{1,230})\]\((https?:\/\/[^\s)]+)\)/g,(match,label,url)=>{
-  const href=trustedLink(url);if(!href)return match;
-  const labelHTML=escapeHTML(label).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  pieces.push(`<a class="article-link" href="${escapeHTML(href)}" target="_blank" rel="noopener noreferrer" title="Mở nguồn tham khảo">${labelHTML}<span aria-hidden="true" class="external-mark"> <svg class="mach-up-right" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>`);
-  return `\uE100${pieces.length-1}\uE101`;
+ const stash=html=>`\uE100${pieces.push(html)-1}\uE101`;
+ let secure=normalizeMd(text).replace(/`([^`\n]+)`/g,(_,code)=>stash(`<code>${escapeHTML(code)}</code>`));
+ secure=secure.replace(/\[([^\]\n]{1,230})\]\((https?:\/\/[^\s)]+)\)/gi,(match,label,url)=>{
+  const safeLabel=escapeHTML(label).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  const anchor=articleAnchor(url,safeLabel);
+  return anchor?stash(anchor):match;
  });
- return escapeHTML(secure).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\uE100(\d+)\uE101/g,(_,i)=>pieces[Number(i)]||'');
+ secure=secure.replace(/\b(?:https?:\/\/|www\.)[^\s<>"'`]+/gi,match=>{
+  const trimmed=trimBareArticleUrl(match);
+  const candidate=/^www\./i.test(trimmed)?'https://'+trimmed:trimmed;
+  const anchor=articleAnchor(candidate,escapeHTML(articleSiteLabel(candidate)));
+  return anchor?stash(anchor)+match.slice(trimmed.length):match;
+ });
+ return escapeHTML(secure).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/\uE100(\d+)\uE101/g,(_,i)=>pieces[Number(i)]||'');
 }
 function referenceLabel(url){
  try{
